@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-*tpdd5#$2jo5d)g&p56__mvv1ep@ab9k_&iaw+dqsl41f^_5a-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -77,12 +77,14 @@ WSGI_APPLICATION = "backend.wsgi.application"
 
 # Auth
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.TokenAuthentication",
-    ),
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticated",
-    ],
+    # "DEFAULT_AUTHENTICATION_CLASSES": (
+    #     "rest_framework.authentication.TokenAuthentication",
+    # ),
+    # "DEFAULT_PERMISSION_CLASSES": [
+    #     "rest_framework.permissions.IsAuthenticated",
+    # ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [],
+    "DEFAULT_PERMISSION_CLASSES": [],
 }
 
 
@@ -134,9 +136,12 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 # DEVELOPMENT
-STATIC_ROOT = '/Users/paulkluge/Documents/Work/Codebase/Michel/condition_check/backend/static'
+STATIC_ROOT = (
+    "/Users/paulkluge/Documents/Work/Codebase/Michel/condition_check/backend/static"
+)
+
 # PRODUCTION
-# STATIC_ROOT = '/home/www.paul-kluge.de/feedback-app.paul-kluge.de/backend/static'
+# STATIC_ROOT = "/home/www.paul-kluge.de/feedback-app.paul-kluge.de/backend/static"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

@@ -12,6 +12,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -37,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => HomeScreen(accesstoken: accessToken)));
+                builder: (context) => HomeScreen(accesstoken: accessToken, email: emailController.text)));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Error: ${res['Message']}'),

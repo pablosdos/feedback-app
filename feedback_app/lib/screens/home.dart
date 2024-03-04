@@ -4,7 +4,9 @@ import 'package:feedback_app/screens/login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final String accesstoken;
-  const HomeScreen({Key? key, required this.accesstoken}) : super(key: key);
+  final String email;
+  const HomeScreen({Key? key, required this.accesstoken, required this.email})
+      : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -15,7 +17,11 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final ApiClient _apiClient = ApiClient();
 
-  double _currentSliderValue = 20;
+  double _currentSliderValueMotivation = 3;
+  double _currentSliderValueMuskulaereErschoepfung = 3;
+  double _currentSliderValueKoerperlicheEinschraenkung = 3;
+  double _currentSliderValueSchlaf = 3;
+  double _currentSliderValueStress = 3;
 
   Future<Map<String, dynamic>> getUserData() async {
     dynamic userRes;
@@ -28,23 +34,27 @@ class _HomeScreenState extends State<HomeScreen> {
         context, MaterialPageRoute(builder: (context) => const LoginScreen()));
   }
 
-  Future<void> login() async {
+  Future<void> submitFeedback() async {
     if (_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: const Text('Processing Data'),
         backgroundColor: Colors.green.shade300,
       ));
 
-      dynamic res = await _apiClient.submitFeedback();
+      dynamic res = await _apiClient.submitFeedback(
+        widget.email,
+        _currentSliderValueMotivation.round().toString(),
+        _currentSliderValueMuskulaereErschoepfung.round().toString(),
+        _currentSliderValueKoerperlicheEinschraenkung.round().toString(),
+        _currentSliderValueSchlaf.round().toString(),
+        _currentSliderValueStress.round().toString(),
+      );
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
       if (res['ErrorCode'] == null) {
-        String accessToken = res['token'];
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => HomeScreen(accesstoken: accessToken)));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const LoginScreen()));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Error: ${res['Message']}'),
@@ -93,15 +103,77 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           SizedBox(height: size.height * 0.06),
                           Slider(
-                              value: _currentSliderValue,
+                              value: _currentSliderValueMotivation,
                               max: 10,
                               divisions: 5,
-                              label: "Motivation: ${_currentSliderValue.round().toString()}",
+                              label:
+                                  "Motivation: ${(_currentSliderValueMotivation.round()).toString()}",
                               onChanged: (double value) {
                                 setState(() {
-                                  _currentSliderValue = value;
+                                  _currentSliderValueMotivation = value;
                                 });
                               }),
+                          Slider(
+                              value: _currentSliderValueMuskulaereErschoepfung,
+                              max: 10,
+                              divisions: 5,
+                              label:
+                                  "Muskuläre Erschöpfung: ${(_currentSliderValueMuskulaereErschoepfung.round()).toString()}",
+                              onChanged: (double value) {
+                                setState(() {
+                                  _currentSliderValueMuskulaereErschoepfung =
+                                      value;
+                                });
+                              }),
+                          Slider(
+                              value:
+                                  _currentSliderValueKoerperlicheEinschraenkung,
+                              max: 10,
+                              divisions: 5,
+                              label:
+                                  "Koerperliche Einschränkung: ${(_currentSliderValueKoerperlicheEinschraenkung.round()).toString()}",
+                              onChanged: (double value) {
+                                setState(() {
+                                  _currentSliderValueKoerperlicheEinschraenkung =
+                                      value;
+                                });
+                              }),
+                          Slider(
+                              value: _currentSliderValueSchlaf,
+                              max: 10,
+                              divisions: 5,
+                              label:
+                                  "Schlaf: ${(_currentSliderValueSchlaf.round()).toString()}",
+                              onChanged: (double value) {
+                                setState(() {
+                                  _currentSliderValueSchlaf = value;
+                                });
+                              }),
+                          Slider(
+                              value: _currentSliderValueStress,
+                              max: 10,
+                              divisions: 5,
+                              label:
+                                  "Stress: ${(_currentSliderValueStress.round()).toString()}",
+                              onChanged: (double value) {
+                                setState(() {
+                                  _currentSliderValueStress = value;
+                                });
+                              }),
+                          TextButton(
+                            onPressed: submitFeedback,
+                            style: TextButton.styleFrom(
+                                backgroundColor: Colors.greenAccent.shade700,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5)),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 15, horizontal: 25)),
+                            child: const Text(
+                              'Absenden',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          SizedBox(height: size.height * 0.04),
                           TextButton(
                             onPressed: () {
                               Navigator.pushReplacement(
