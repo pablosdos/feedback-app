@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:feedback_app/core/api_client.dart';
-import 'package:feedback_app/screens/login_screen.dart';
+import 'package:feedback_app/screens/login.dart';
+import 'package:feedback_app/screens/personal_stats.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class HomeScreen extends StatefulWidget {
   final String accesstoken;
@@ -30,6 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('email');
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => const LoginScreen()));
   }
@@ -37,11 +42,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> submitFeedback() async {
     if (_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text('Processing Data'),
+        content: const Text('Danke für die Eingabe'),
         backgroundColor: Colors.green.shade300,
       ));
-
-      dynamic res = await _apiClient.submitFeedback(
+      
+      dynamic res = await _apiClient.submitFeedbackToDatabase(
         widget.email,
         _currentSliderValueMotivation.round().toString(),
         _currentSliderValueMuskulaereErschoepfung.round().toString(),
@@ -54,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       if (res['ErrorCode'] == null) {
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const LoginScreen()));
+            MaterialPageRoute(builder: (context) => PersonalStatsScreen()));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Error: ${res['Message']}'),

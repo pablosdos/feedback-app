@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:feedback_app/core/api_client.dart';
 import 'package:feedback_app/screens/home.dart';
 import 'package:feedback_app/utils/validator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> login() async {
     if (_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text('Processing Data'),
+        content: const Text('Du wirst eingeloggt...'),
         backgroundColor: Colors.green.shade300,
       ));
 
@@ -40,6 +41,8 @@ class _LoginScreenState extends State<LoginScreen> {
             MaterialPageRoute(
                 builder: (context) => HomeScreen(accesstoken: accessToken, email: emailController.text)));
       } else {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('email', emailController.text);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Error: ${res['Message']}'),
           backgroundColor: Colors.red.shade300,

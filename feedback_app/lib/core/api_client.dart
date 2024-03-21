@@ -6,7 +6,8 @@ class ApiClient {
   Future<dynamic> login(String email, String password) async {
     try {
       Response response = await _dio.post(
-        'http://feedback-app.paul-kluge.de:8000/api-token-auth/',
+        'http://localhost:8000/api-token-auth/',
+        // 'http://feedback-app.paul-kluge.de:8000/api-token-auth/',
         data: {
           'username': email,
           'password': password,
@@ -18,7 +19,7 @@ class ApiClient {
     }
   }
 
-  Future<dynamic> submitFeedback(
+  Future<dynamic> submitFeedbackToDatabase(
     String email,
     String motivation,
     String muskulaereErschoepfung,
@@ -28,7 +29,8 @@ class ApiClient {
   ) async {
     try {
       Response response = await _dio.post(
-        'http://feedback-app.paul-kluge.de:8000/feedback-app-api/feedbacks/',
+        'http://localhost:8000/feedback-app-api/feedbacks/',
+        // 'http://feedback-app.paul-kluge.de:8000/feedback-app-api/feedbacks/',
         data: {
           "User": email,
           "motivation": motivation,
