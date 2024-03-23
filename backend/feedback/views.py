@@ -51,6 +51,9 @@ class FeedbackCreateView(APIView):
             return JsonResponse({"result":feedback_queryset.update(**json_feedback_form_data)})
 
 
-class FeedbackDetailView(generics.RetrieveUpdateDestroyAPIView):
+class FeedbackListView(generics.ListAPIView):
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
+
+    def get_queryset(self):
+        return Feedback.objects.filter(User_id=self.kwargs['email'])
