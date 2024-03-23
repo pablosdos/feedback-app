@@ -6,6 +6,7 @@ class FeedbackAdmin(admin.ModelAdmin):
     readonly_fields=['created_at']
     # list_display = [field.name for field in Feedback._meta.get_fields()]
     list_display = [
+        'id', 
         "User",
         "created_at",
     ]

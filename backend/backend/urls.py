@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.authtoken import views
-from feedback.views import FeedbackCreateView
+from feedback.views import FeedbackCreateView, FeedbackDetailView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('auth_api.urls', namespace='auth_api')),
+    path('feedback-app-api/', include('auth_api.urls', namespace='auth_api')),
     path('feedback-app-api/feedbacks/', FeedbackCreateView.as_view(), name='feedback-create'),
+    path('feedback-app-api/feedbacks/<int:pk>/', FeedbackDetailView.as_view(), name='feedback-get-by-email'),
     path('api-token-auth/', views.obtain_auth_token, name='api-token-auth'),
 ]
 

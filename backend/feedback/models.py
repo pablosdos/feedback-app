@@ -3,11 +3,11 @@ from django.conf import settings
 
 ESTIMATION = {
     0: 0,
-    2: 1,
-    3: 2,
-    6: 3,
-    8: 4,
-    10: 5
+    1: 1,
+    2: 2,
+    3: 3,
+    4: 4,
+    5: 5
 }
 
 class Feedback(models.Model):

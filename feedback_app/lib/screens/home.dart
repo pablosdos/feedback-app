@@ -3,14 +3,9 @@ import 'package:feedback_app/core/api_client.dart';
 import 'package:feedback_app/screens/login.dart';
 import 'package:feedback_app/screens/personal_stats.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:feedback_app/data/price_point.dart';
 
 class HomeScreen extends StatefulWidget {
-  final String accesstoken;
-  final String email;
-  const HomeScreen({Key? key, required this.accesstoken, required this.email})
-      : super(key: key);
-
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -19,6 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController motivationController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final ApiClient _apiClient = ApiClient();
+  String _email = '';
 
   double _currentSliderValueMotivation = 3;
   double _currentSliderValueMuskulaereErschoepfung = 3;
@@ -26,15 +22,25 @@ class _HomeScreenState extends State<HomeScreen> {
   double _currentSliderValueSchlaf = 3;
   double _currentSliderValueStress = 3;
 
-  Future<Map<String, dynamic>> getUserData() async {
-    dynamic userRes;
-    userRes = await _apiClient.getUserProfileData(widget.accesstoken);
-    return userRes;
+  @override
+  void initState() {
+    super.initState();
+    _loadPreferences();
+  }
+
+  void _loadPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _email = prefs.getString('email') ?? '';
+    });
+    // debugPrint('enter home screen with: $_email');
   }
 
   Future<void> logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('email');
+    debugPrint('prefs: $prefs');
+    debugPrint('logout: $_email');
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => const LoginScreen()));
   }
@@ -45,9 +51,9 @@ class _HomeScreenState extends State<HomeScreen> {
         content: const Text('Danke für die Eingabe'),
         backgroundColor: Colors.green.shade300,
       ));
-      
+
       dynamic res = await _apiClient.submitFeedbackToDatabase(
-        widget.email,
+        _email,
         _currentSliderValueMotivation.round().toString(),
         _currentSliderValueMuskulaereErschoepfung.round().toString(),
         _currentSliderValueKoerperlicheEinschraenkung.round().toString(),
@@ -58,8 +64,16 @@ class _HomeScreenState extends State<HomeScreen> {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
       if (res['ErrorCode'] == null) {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => PersonalStatsScreen()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => LineChartWidget(
+                    motivationPoints,
+                    muskulaereErschoepfungPoints,
+                    koerperlicheEinschraenkungPoints,
+                    schlafPoints,
+                    stressPoints,
+                    isComplete)));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Error: ${res['Message']}'),
@@ -109,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           SizedBox(height: size.height * 0.06),
                           Slider(
                               value: _currentSliderValueMotivation,
-                              max: 10,
+                              max: 5,
                               divisions: 5,
                               label:
                                   "Motivation: ${(_currentSliderValueMotivation.round()).toString()}",
@@ -120,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               }),
                           Slider(
                               value: _currentSliderValueMuskulaereErschoepfung,
-                              max: 10,
+                              max: 5,
                               divisions: 5,
                               label:
                                   "Muskuläre Erschöpfung: ${(_currentSliderValueMuskulaereErschoepfung.round()).toString()}",
@@ -133,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Slider(
                               value:
                                   _currentSliderValueKoerperlicheEinschraenkung,
-                              max: 10,
+                              max: 5,
                               divisions: 5,
                               label:
                                   "Koerperliche Einschränkung: ${(_currentSliderValueKoerperlicheEinschraenkung.round()).toString()}",
@@ -145,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               }),
                           Slider(
                               value: _currentSliderValueSchlaf,
-                              max: 10,
+                              max: 5,
                               divisions: 5,
                               label:
                                   "Schlaf: ${(_currentSliderValueSchlaf.round()).toString()}",
@@ -156,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               }),
                           Slider(
                               value: _currentSliderValueStress,
-                              max: 10,
+                              max: 5,
                               divisions: 5,
                               label:
                                   "Stress: ${(_currentSliderValueStress.round()).toString()}",
@@ -180,13 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           SizedBox(height: size.height * 0.04),
                           TextButton(
-                            onPressed: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const LoginScreen()));
-                            },
+                            onPressed: logout,
                             style: TextButton.styleFrom(
                                 backgroundColor: Colors.redAccent.shade700,
                                 shape: RoundedRectangleBorder(

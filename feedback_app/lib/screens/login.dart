@@ -4,6 +4,7 @@ import 'package:feedback_app/core/api_client.dart';
 import 'package:feedback_app/screens/home.dart';
 import 'package:feedback_app/utils/validator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/foundation.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -13,7 +14,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -33,16 +33,18 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
       if (res['ErrorCode'] == null) {
-        String accessToken = res['token'];
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => HomeScreen(accesstoken: accessToken, email: emailController.text)));
-      } else {
+        // String errCode = res['ErrorCode'];
+        // debugPrint('enter home screen with: $errCode');
+        // debugPrint(res);
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('email', emailController.text);
+        String? email_address = prefs.getString('email');
+        // debugPrint('email address: $email_address');
+        String accessToken = res['token'];
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Error: ${res['Message']}'),
           backgroundColor: Colors.red.shade300,
@@ -53,6 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // debugPrint('PRINTING DEBUG LOG...');
     var size = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: Colors.blueGrey[200],
@@ -81,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           // SizedBox(height: size.height * 0.08),
                           const Center(
                             child: Text(
-                              "Login",
+                              "Feedback App",
                               style: TextStyle(
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold,

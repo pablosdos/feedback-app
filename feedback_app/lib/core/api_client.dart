@@ -46,13 +46,12 @@ class ApiClient {
     }
   }
 
-  Future<dynamic> getUserProfileData(String accessToken) async {
+  Future<dynamic> getUserWithFeedbacks(
+  ) async {
     try {
       Response response = await _dio.get(
-        'https://api.loginradius.com/identity/v2/auth/account',
-        options: Options(
-          headers: {'Authorization': 'Bearer $accessToken'},
-        ),
+        'http://localhost:8000/feedback-app-api/users/dev@dev.de',
+        // 'http://feedback-app.paul-kluge.de:8000/feedback-app-api/users/dev@dev.de',
       );
       return response.data;
     } on DioError catch (e) {

@@ -3,6 +3,7 @@ from rest_framework import serializers
 
 
 class FeedbackSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Feedback
         fields = (
@@ -12,4 +13,5 @@ class FeedbackSerializer(serializers.ModelSerializer):
             "koerperliche_einschraenkung",
             "schlaf",
             "stress",
+            "created_at",
         )
