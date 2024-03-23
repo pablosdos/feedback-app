@@ -41,323 +41,396 @@ class LineChartWidget extends StatelessWidget {
         backgroundColor: Colors.blueGrey[200],
         body: Form(
           key: _formKey,
-          child: Stack(children: [
-            SizedBox(
-              width: size.width,
-              height: size.height,
-              child: Align(
-                alignment: Alignment.center,
-                child: Container(
-                  width: size.width * 0.85,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
+          child: (isComplete == false)
+              ? Stack(children: [
+                  SizedBox(
+                    width: size.width,
+                    height: size.height,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        width: size.width * 0.85,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 30),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: SingleChildScrollView(
+                          child: Center(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                SizedBox(height: size.height * 0.08),
+                                const Center(
+                                    child: Text(
+                                  "Bitte lege für 7 aufeinander folgende Tage Feedback an, dann ist die Statistik hier einsehbar.",
+                                  style: TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HomeScreen()));
+                                  },
+                                  style: TextButton.styleFrom(
+                                      backgroundColor:
+                                          Colors.greenAccent.shade700,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 15, horizontal: 25)),
+                                  child: const Text(
+                                    'Heutiges Feedback ändern',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                                SizedBox(height: size.height * 0.04),
+                                TextButton(
+                                  onPressed: logout,
+                                  style: TextButton.styleFrom(
+                                      backgroundColor:
+                                          Colors.redAccent.shade700,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 15, horizontal: 25)),
+                                  child: const Text(
+                                    'Logout',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  child: SingleChildScrollView(
-                    child: Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          SizedBox(height: size.height * 0.08),
-                          Center(
-                            child: (motivationPoints == false)
-                                ? Text(
+                ])
+              : Stack(children: [
+                  SizedBox(
+                    width: size.width,
+                    height: size.height,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        width: size.width * 0.85,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 30),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: SingleChildScrollView(
+                          child: Center(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                SizedBox(height: size.height * 0.08),
+                                const Center(
+                                  child: Text(
                                     "Deine 7-Tage-Statistik",
-                                    style: TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  )
-                                : Text(
-                                    "Bitte lege für 7 aufeinander folgende Tage Feedback an, dann ist die Statistik hier einsehbar.",
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                          ),
-                          SizedBox(height: size.height * 0.06),
-                          const Center(
-                            child: Text(
-                              "Motivation",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          AspectRatio(
-                            aspectRatio: 2,
-                            child: LineChart(
-                              LineChartData(
-                                lineBarsData: [
-                                  LineChartBarData(
-                                      spots: motivationPoints
-                                          .map((point) =>
-                                              FlSpot(point.x, point.y))
-                                          .toList(),
-                                      isCurved: false,
-                                      dotData: FlDotData(
-                                        show: false,
-                                      ),
-                                      color: Colors.red),
-                                ],
-                                borderData: FlBorderData(
-                                    border: const Border(
-                                        bottom: BorderSide(),
-                                        left: BorderSide())),
-                                gridData: FlGridData(show: false),
-                                titlesData: FlTitlesData(
-                                  bottomTitles:
-                                      AxisTitles(sideTitles: _bottomTitles),
-                                  leftTitles: AxisTitles(
-                                      sideTitles:
-                                          SideTitles(showTitles: false)),
-                                  topTitles: AxisTitles(
-                                      sideTitles:
-                                          SideTitles(showTitles: false)),
-                                  rightTitles: AxisTitles(
-                                      sideTitles:
-                                          SideTitles(showTitles: false)),
                                 ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: size.height * 0.06),
-                          SizedBox(height: size.height * 0.06),
-                          const Center(
-                            child: Text(
-                              "Muskuläre Erschöpfung",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          AspectRatio(
-                            aspectRatio: 2,
-                            child: LineChart(
-                              LineChartData(
-                                lineBarsData: [
-                                  LineChartBarData(
-                                      spots: muskulaereErschoepfungPoints
-                                          .map((point) =>
-                                              FlSpot(point.x, point.y))
-                                          .toList(),
-                                      isCurved: false,
-                                      dotData: FlDotData(
-                                        show: false,
-                                      ),
-                                      color: Colors.red),
-                                ],
-                                borderData: FlBorderData(
-                                    border: const Border(
-                                        bottom: BorderSide(),
-                                        left: BorderSide())),
-                                gridData: FlGridData(show: false),
-                                titlesData: FlTitlesData(
-                                  bottomTitles:
-                                      AxisTitles(sideTitles: _bottomTitles),
-                                  leftTitles: AxisTitles(
-                                      sideTitles:
-                                          SideTitles(showTitles: false)),
-                                  topTitles: AxisTitles(
-                                      sideTitles:
-                                          SideTitles(showTitles: false)),
-                                  rightTitles: AxisTitles(
-                                      sideTitles:
-                                          SideTitles(showTitles: false)),
+                                SizedBox(height: size.height * 0.06),
+                                const Center(
+                                  child: Text(
+                                    "Motivation",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: size.height * 0.06),
-                          SizedBox(height: size.height * 0.06),
-                          const Center(
-                            child: Text(
-                              "Körperliche Einschränkung",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          AspectRatio(
-                            aspectRatio: 2,
-                            child: LineChart(
-                              LineChartData(
-                                lineBarsData: [
-                                  LineChartBarData(
-                                      spots: koerperlicheEinschraenkungPoints
-                                          .map((point) =>
-                                              FlSpot(point.x, point.y))
-                                          .toList(),
-                                      isCurved: false,
-                                      dotData: FlDotData(
-                                        show: false,
+                                AspectRatio(
+                                  aspectRatio: 2,
+                                  child: LineChart(
+                                    LineChartData(
+                                      lineBarsData: [
+                                        LineChartBarData(
+                                            spots: motivationPoints
+                                                .map((point) =>
+                                                    FlSpot(point.x, point.y))
+                                                .toList(),
+                                            isCurved: false,
+                                            dotData: FlDotData(
+                                              show: false,
+                                            ),
+                                            color: Colors.red),
+                                      ],
+                                      borderData: FlBorderData(
+                                          border: const Border(
+                                              bottom: BorderSide(),
+                                              left: BorderSide())),
+                                      gridData: FlGridData(show: false),
+                                      titlesData: FlTitlesData(
+                                        bottomTitles: AxisTitles(
+                                            sideTitles: _bottomTitles),
+                                        leftTitles: AxisTitles(
+                                            sideTitles:
+                                                SideTitles(showTitles: false)),
+                                        topTitles: AxisTitles(
+                                            sideTitles:
+                                                SideTitles(showTitles: false)),
+                                        rightTitles: AxisTitles(
+                                            sideTitles:
+                                                SideTitles(showTitles: false)),
                                       ),
-                                      color: Colors.red),
-                                ],
-                                borderData: FlBorderData(
-                                    border: const Border(
-                                        bottom: BorderSide(),
-                                        left: BorderSide())),
-                                gridData: FlGridData(show: false),
-                                titlesData: FlTitlesData(
-                                  bottomTitles:
-                                      AxisTitles(sideTitles: _bottomTitles),
-                                  leftTitles: AxisTitles(
-                                      sideTitles:
-                                          SideTitles(showTitles: false)),
-                                  topTitles: AxisTitles(
-                                      sideTitles:
-                                          SideTitles(showTitles: false)),
-                                  rightTitles: AxisTitles(
-                                      sideTitles:
-                                          SideTitles(showTitles: false)),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: size.height * 0.06),
-                          SizedBox(height: size.height * 0.06),
-                          const Center(
-                            child: Text(
-                              "Schlaf",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          AspectRatio(
-                            aspectRatio: 2,
-                            child: LineChart(
-                              LineChartData(
-                                lineBarsData: [
-                                  LineChartBarData(
-                                      spots: schlafPoints
-                                          .map((point) =>
-                                              FlSpot(point.x, point.y))
-                                          .toList(),
-                                      isCurved: false,
-                                      dotData: FlDotData(
-                                        show: false,
+                                SizedBox(height: size.height * 0.06),
+                                SizedBox(height: size.height * 0.06),
+                                const Center(
+                                  child: Text(
+                                    "Muskuläre Erschöpfung",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                AspectRatio(
+                                  aspectRatio: 2,
+                                  child: LineChart(
+                                    LineChartData(
+                                      lineBarsData: [
+                                        LineChartBarData(
+                                            spots: muskulaereErschoepfungPoints
+                                                .map((point) =>
+                                                    FlSpot(point.x, point.y))
+                                                .toList(),
+                                            isCurved: false,
+                                            dotData: FlDotData(
+                                              show: false,
+                                            ),
+                                            color: Colors.red),
+                                      ],
+                                      borderData: FlBorderData(
+                                          border: const Border(
+                                              bottom: BorderSide(),
+                                              left: BorderSide())),
+                                      gridData: FlGridData(show: false),
+                                      titlesData: FlTitlesData(
+                                        bottomTitles: AxisTitles(
+                                            sideTitles: _bottomTitles),
+                                        leftTitles: AxisTitles(
+                                            sideTitles:
+                                                SideTitles(showTitles: false)),
+                                        topTitles: AxisTitles(
+                                            sideTitles:
+                                                SideTitles(showTitles: false)),
+                                        rightTitles: AxisTitles(
+                                            sideTitles:
+                                                SideTitles(showTitles: false)),
                                       ),
-                                      color: Colors.red),
-                                ],
-                                borderData: FlBorderData(
-                                    border: const Border(
-                                        bottom: BorderSide(),
-                                        left: BorderSide())),
-                                gridData: FlGridData(show: false),
-                                titlesData: FlTitlesData(
-                                  bottomTitles:
-                                      AxisTitles(sideTitles: _bottomTitles),
-                                  leftTitles: AxisTitles(
-                                      sideTitles:
-                                          SideTitles(showTitles: false)),
-                                  topTitles: AxisTitles(
-                                      sideTitles:
-                                          SideTitles(showTitles: false)),
-                                  rightTitles: AxisTitles(
-                                      sideTitles:
-                                          SideTitles(showTitles: false)),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: size.height * 0.06),
-                          SizedBox(height: size.height * 0.06),
-                          const Center(
-                            child: Text(
-                              "Stress",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          AspectRatio(
-                            aspectRatio: 2,
-                            child: LineChart(
-                              LineChartData(
-                                lineBarsData: [
-                                  LineChartBarData(
-                                      spots: stressPoints
-                                          .map((point) =>
-                                              FlSpot(point.x, point.y))
-                                          .toList(),
-                                      isCurved: false,
-                                      dotData: FlDotData(
-                                        show: false,
+                                SizedBox(height: size.height * 0.06),
+                                SizedBox(height: size.height * 0.06),
+                                const Center(
+                                  child: Text(
+                                    "Körperliche Einschränkung",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                AspectRatio(
+                                  aspectRatio: 2,
+                                  child: LineChart(
+                                    LineChartData(
+                                      lineBarsData: [
+                                        LineChartBarData(
+                                            spots:
+                                                koerperlicheEinschraenkungPoints
+                                                    .map((point) => FlSpot(
+                                                        point.x, point.y))
+                                                    .toList(),
+                                            isCurved: false,
+                                            dotData: FlDotData(
+                                              show: false,
+                                            ),
+                                            color: Colors.red),
+                                      ],
+                                      borderData: FlBorderData(
+                                          border: const Border(
+                                              bottom: BorderSide(),
+                                              left: BorderSide())),
+                                      gridData: FlGridData(show: false),
+                                      titlesData: FlTitlesData(
+                                        bottomTitles: AxisTitles(
+                                            sideTitles: _bottomTitles),
+                                        leftTitles: AxisTitles(
+                                            sideTitles:
+                                                SideTitles(showTitles: false)),
+                                        topTitles: AxisTitles(
+                                            sideTitles:
+                                                SideTitles(showTitles: false)),
+                                        rightTitles: AxisTitles(
+                                            sideTitles:
+                                                SideTitles(showTitles: false)),
                                       ),
-                                      color: Colors.red),
-                                ],
-                                borderData: FlBorderData(
-                                    border: const Border(
-                                        bottom: BorderSide(),
-                                        left: BorderSide())),
-                                gridData: FlGridData(show: false),
-                                titlesData: FlTitlesData(
-                                  bottomTitles:
-                                      AxisTitles(sideTitles: _bottomTitles),
-                                  leftTitles: AxisTitles(
-                                      sideTitles:
-                                          SideTitles(showTitles: false)),
-                                  topTitles: AxisTitles(
-                                      sideTitles:
-                                          SideTitles(showTitles: false)),
-                                  rightTitles: AxisTitles(
-                                      sideTitles:
-                                          SideTitles(showTitles: false)),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                SizedBox(height: size.height * 0.06),
+                                SizedBox(height: size.height * 0.06),
+                                const Center(
+                                  child: Text(
+                                    "Schlaf",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                AspectRatio(
+                                  aspectRatio: 2,
+                                  child: LineChart(
+                                    LineChartData(
+                                      lineBarsData: [
+                                        LineChartBarData(
+                                            spots: schlafPoints
+                                                .map((point) =>
+                                                    FlSpot(point.x, point.y))
+                                                .toList(),
+                                            isCurved: false,
+                                            dotData: FlDotData(
+                                              show: false,
+                                            ),
+                                            color: Colors.red),
+                                      ],
+                                      borderData: FlBorderData(
+                                          border: const Border(
+                                              bottom: BorderSide(),
+                                              left: BorderSide())),
+                                      gridData: FlGridData(show: false),
+                                      titlesData: FlTitlesData(
+                                        bottomTitles: AxisTitles(
+                                            sideTitles: _bottomTitles),
+                                        leftTitles: AxisTitles(
+                                            sideTitles:
+                                                SideTitles(showTitles: false)),
+                                        topTitles: AxisTitles(
+                                            sideTitles:
+                                                SideTitles(showTitles: false)),
+                                        rightTitles: AxisTitles(
+                                            sideTitles:
+                                                SideTitles(showTitles: false)),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: size.height * 0.06),
+                                SizedBox(height: size.height * 0.06),
+                                const Center(
+                                  child: Text(
+                                    "Stress",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                AspectRatio(
+                                  aspectRatio: 2,
+                                  child: LineChart(
+                                    LineChartData(
+                                      lineBarsData: [
+                                        LineChartBarData(
+                                            spots: stressPoints
+                                                .map((point) =>
+                                                    FlSpot(point.x, point.y))
+                                                .toList(),
+                                            isCurved: false,
+                                            dotData: FlDotData(
+                                              show: false,
+                                            ),
+                                            color: Colors.red),
+                                      ],
+                                      borderData: FlBorderData(
+                                          border: const Border(
+                                              bottom: BorderSide(),
+                                              left: BorderSide())),
+                                      gridData: FlGridData(show: false),
+                                      titlesData: FlTitlesData(
+                                        bottomTitles: AxisTitles(
+                                            sideTitles: _bottomTitles),
+                                        leftTitles: AxisTitles(
+                                            sideTitles:
+                                                SideTitles(showTitles: false)),
+                                        topTitles: AxisTitles(
+                                            sideTitles:
+                                                SideTitles(showTitles: false)),
+                                        rightTitles: AxisTitles(
+                                            sideTitles:
+                                                SideTitles(showTitles: false)),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HomeScreen()));
+                                  },
+                                  style: TextButton.styleFrom(
+                                      backgroundColor:
+                                          Colors.greenAccent.shade700,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 15, horizontal: 25)),
+                                  child: const Text(
+                                    'Heutiges Feedback ändern',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                                SizedBox(height: size.height * 0.04),
+                                TextButton(
+                                  onPressed: logout,
+                                  style: TextButton.styleFrom(
+                                      backgroundColor:
+                                          Colors.redAccent.shade700,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 15, horizontal: 25)),
+                                  child: const Text(
+                                    'Logout',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomeScreen()));
-                            },
-                            style: TextButton.styleFrom(
-                                backgroundColor: Colors.greenAccent.shade700,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5)),
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 15, horizontal: 25)),
-                            child: const Text(
-                              'Heutiges Feedback ändern',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                          SizedBox(height: size.height * 0.04),
-                          TextButton(
-                            onPressed: logout,
-                            style: TextButton.styleFrom(
-                                backgroundColor: Colors.redAccent.shade700,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5)),
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 15, horizontal: 25)),
-                            child: const Text(
-                              'Logout',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
-            ),
-          ]),
+                ]),
         ));
   }
 

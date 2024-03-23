@@ -19,36 +19,31 @@ class PricePoint {
 }
 
 final ApiClient _apiClient = ApiClient();
-const json = '''
-{
-    "first_name": "",
-    "last_name": "",
-    "email": "",
-    "password": "",
-    "feedbacks": [
-    ]
-}
-''';
 
-Future<void> getFeedbacks() async {
-  dynamic res = await _apiClient.getUserWithFeedbacks();
-  logging.log(res["feedbacks"].toString());
-}
+// Future<void> getFeedbacks() async {
+//   dynamic res = await _apiClient.getUserWithFeedbacks();
+//   logging.log(res["feedbacks"].toString());
+// }
 
 List<PricePoint> get motivationPoints {
   final Random random = Random();
   final motivationNumbers = <double>[];
-  getFeedbacks().then((value) {
-    // print(value);
+  // getFeedbacks().then((value) {
+  //   // print(value);
+  // });
+  _apiClient.getFeedbacks().then((value) {
+    // print(value[0].created_at);
+    // print(value[0].created_at);
+    // print(value[0].created_at);
+    // print(value[0].created_at);
   });
-
   logging.log('data: $days');
 
   for (var i = 0; i < days.length; i++) {
-    print(days[i]);
+    // print(days[i]);
   }
   for (var i = 0; i <= 6; i++) {
-    print(i);
+    // print(i);
     // TODO: get date of this day; try to find in feedback; if found, take value; otherwise
     // String a = random.nextDouble().toString();
     // logging.log('data: $a');
@@ -102,5 +97,19 @@ List<PricePoint> get stressPoints {
 }
 
 bool get isComplete {
-  return false;
+  const counter = 0;
+  for (var i = 0; i < days.length; i++) {
+    print(days[i]);
+  }
+  _apiClient.getFeedbacks().then((value) {
+    for (var i = 0; i < value.length; i++) {
+      for (var i = 0; i < days.length; i++) {
+        if (days[i].toString().substring(0, 9) == days[i].toString().substring(0, 9)) {
+          print('same');
+        }
+      }
+    }
+  });
+  // logging.log(_apiClient.postsFuture[0].toString());
+  return true;
 }
