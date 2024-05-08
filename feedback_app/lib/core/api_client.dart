@@ -98,22 +98,17 @@ class ApiClient {
   Future<void> _getUserEmail() async {
     final prefs = await SharedPreferences.getInstance();
     _email = prefs.getString('email') ?? '';
-    // debugPrint('enter home screen with: $_email');
   }
 
   Future<List<Feedback>> getFeedbacks() async {
     await _getUserEmail();
-    print('http://localhost:8000/feedback-app-api/feedbacks/$_email');
     var url = Uri.parse(
       'http://localhost:8000/feedback-app-api/feedbacks/$_email',
       // 'http://feedback-app.paul-kluge.de:8000/feedback-app-api/feedbacks/$_email',
     );
     final response =
         await http.get(url, headers: {"Content-Type": "application/json"});
-    // logging.log(response.body);
     final List body = json.decode(response.body);
     return body.map((e) => Feedback.fromJson(e)).toList();
   }
-
-  // Future<List<Feedback>> feedbacksFuture = getFeedbacks();
 }

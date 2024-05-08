@@ -11,4 +11,4 @@ urlpatterns = [
     path('api-token-auth/', views.obtain_auth_token, name='api-token-auth'),
 ]
 
-admin.site.site_header = 'Feedback App Administration'
+admin.site.site_header = 'Graspmetrics Administration'

@@ -11,7 +11,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var email = prefs.getString('email');
-  debugPrint('email exists if visible: $email');
+  // debugPrint('email exists if visible: $email');
   runApp(MaterialApp(home: email == null ? LoginScreen() : HomeScreen()));
 }
 

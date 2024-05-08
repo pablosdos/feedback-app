@@ -1,9 +1,10 @@
 import 'dart:math';
+import 'dart:io';
 import 'package:collection/collection.dart';
 import 'package:feedback_app/core/api_client.dart';
 import 'dart:developer' as logging;
 
-final days = List<DateTime>.generate(
+final lastSevenDays = List<DateTime>.generate(
     7,
     (i) => DateTime.utc(
           DateTime.now().year,
@@ -20,36 +21,20 @@ class PricePoint {
 
 final ApiClient _apiClient = ApiClient();
 
-// Future<void> getFeedbacks() async {
-//   dynamic res = await _apiClient.getUserWithFeedbacks();
-//   logging.log(res["feedbacks"].toString());
-// }
-
 List<PricePoint> get motivationPoints {
   final Random random = Random();
   final motivationNumbers = <double>[];
-  // getFeedbacks().then((value) {
-  //   // print(value);
-  // });
-  _apiClient.getFeedbacks().then((value) {
-    // print(value[0].created_at);
-    // print(value[0].created_at);
-    // print(value[0].created_at);
-    // print(value[0].created_at);
-  });
-  logging.log('data: $days');
 
-  for (var i = 0; i < days.length; i++) {
-    // print(days[i]);
-  }
   for (var i = 0; i <= 6; i++) {
-    // print(i);
-    // TODO: get date of this day; try to find in feedback; if found, take value; otherwise
-    // String a = random.nextDouble().toString();
-    // logging.log('data: $a');
     motivationNumbers.add(random.nextDouble());
   }
   // motivationNumbers.clear();
+  // print('original');
+  // print(motivationNumbers);
+  // print(motivationNumbers
+  //     .mapIndexed(
+  //         (index, element) => PricePoint(x: index.toDouble(), y: element))
+  //     .toList()[0].y);
   return motivationNumbers
       .mapIndexed(
           (index, element) => PricePoint(x: index.toDouble(), y: element))
@@ -96,20 +81,83 @@ List<PricePoint> get stressPoints {
       .toList();
 }
 
-bool get isComplete {
-  const counter = 0;
-  for (var i = 0; i < days.length; i++) {
-    print(days[i]);
-  }
-  _apiClient.getFeedbacks().then((value) {
-    for (var i = 0; i < value.length; i++) {
-      for (var i = 0; i < days.length; i++) {
-        if (days[i].toString().substring(0, 9) == days[i].toString().substring(0, 9)) {
-          print('same');
-        }
+bool getIsComplete(result) {
+  int counter = 0;
+  bool returnValue;
+  for (var i = 0; i < result.length; i++) {
+    for (var j = 0; j < lastSevenDays.length; j++) {
+      if (result[i].created_at.toString().substring(0, 10) ==
+          lastSevenDays[j].toString().substring(0, 10)) {
+        // print(lastSevenDays[j].toString());
+        counter++;
       }
     }
-  });
-  // logging.log(_apiClient.postsFuture[0].toString());
+  }
+  if (counter == 7) {
+    returnValue = true;
+  } else {
+    returnValue = false;
+  }
+  return returnValue;
+}
+
+Map<String, List<PricePoint>> getMapOfPricePointLists(result) {
+  int counter = 0;
+  Map<String, List<PricePoint>> mapOfPricePointLists = {};
+  final motivationNumbers = <double>[];
+  final muskulaere_erschoepfungNumbers = <double>[];
+  final koerperliche_einschraenkungNumbers = <double>[];
+  final schlafNumbers = <double>[];
+  final stressNumbers = <double>[];
+
+  for (var i = 0; i < result.length; i++) {
+    for (var j = 0; j < lastSevenDays.length; j++) {
+      if (result[i].created_at.toString().substring(0, 10) ==
+          lastSevenDays[j].toString().substring(0, 10)) {
+        motivationNumbers.add(result[i].motivation.toDouble());
+        muskulaere_erschoepfungNumbers.add(result[i].muskulaere_erschoepfung.toDouble());
+        koerperliche_einschraenkungNumbers.add(result[i].koerperliche_einschraenkung.toDouble());
+        schlafNumbers.add(result[i].schlaf.toDouble());
+        stressNumbers.add(result[i].stress.toDouble());
+        counter++;
+      }
+    }
+  }
+
+  mapOfPricePointLists['motivation'] = motivationNumbers
+      .mapIndexed(
+          (index, element) => PricePoint(x: index.toDouble(), y: element))
+      .toList();
+  mapOfPricePointLists['muskulaere_erschoepfung'] =
+      muskulaere_erschoepfungNumbers
+          .mapIndexed(
+              (index, element) => PricePoint(x: index.toDouble(), y: element))
+          .toList();
+  mapOfPricePointLists['koerperliche_einschraenkung'] =
+      koerperliche_einschraenkungNumbers
+          .mapIndexed(
+              (index, element) => PricePoint(x: index.toDouble(), y: element))
+          .toList();
+  mapOfPricePointLists['schlaf'] = schlafNumbers
+      .mapIndexed(
+          (index, element) => PricePoint(x: index.toDouble(), y: element))
+      .toList();
+  mapOfPricePointLists['stress'] = stressNumbers
+      .mapIndexed(
+          (index, element) => PricePoint(x: index.toDouble(), y: element))
+      .toList();
+
+  return mapOfPricePointLists;
+}
+
+Future feedbacksAndCompleteHint() async {
+  var bundle = new Map();
+  var result = await _apiClient.getFeedbacks();
+  bundle['isComplete'] = getIsComplete(result);
+  bundle['mapOfFeedbacks'] = getMapOfPricePointLists(result);
+  return bundle;
+}
+
+bool get isComplete {
   return true;
 }
