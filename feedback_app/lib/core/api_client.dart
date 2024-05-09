@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'dart:developer' as logging;
+// import 'dart:developer' as logging;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Feedback {
   int? id;
@@ -39,12 +40,11 @@ class Feedback {
 class ApiClient {
   final Dio _dio = Dio();
   String _email = '';
-
+  String apiKey = dotenv.env['API_URL']!;
   Future<dynamic> login(String email, String password) async {
     try {
       Response response = await _dio.post(
-        'http://localhost:8000/api-token-auth/',
-        // 'http://feedback-app.paul-kluge.de:8000/api-token-auth/',
+        '${apiKey}/api-token-auth/',
         data: {
           'username': email,
           'password': password,
@@ -66,8 +66,7 @@ class ApiClient {
   ) async {
     try {
       Response response = await _dio.post(
-        'http://localhost:8000/feedback-app-api/feedbacks/',
-        // 'http://feedback-app.paul-kluge.de:8000/feedback-app-api/feedbacks/',
+        '${apiKey}/feedback-app-api/feedbacks/',
         data: {
           "User": email,
           "motivation": motivation,
@@ -85,10 +84,8 @@ class ApiClient {
 
   Future<dynamic> getUserWithFeedbacks() async {
     try {
-      Response response = await _dio.get(
-        'http://localhost:8000/feedback-app-api/users/dev@dev.de',
-        // 'http://feedback-app.paul-kluge.de:8000/feedback-app-api/users/dev@dev.de',
-      );
+      Response response =
+          await _dio.get('${apiKey}/feedback-app-api/users/dev@dev.de');
       return response.data;
     } on DioError catch (e) {
       return e.response!.data;
@@ -102,10 +99,17 @@ class ApiClient {
 
   Future<List<Feedback>> getFeedbacks() async {
     await _getUserEmail();
+    var url = Uri.parse('${apiKey}/feedback-app-api/feedbacks/$_email');
+    final response =
+        await http.get(url, headers: {"Content-Type": "application/json"});
+    final List body = json.decode(response.body);
+    return body.map((e) => Feedback.fromJson(e)).toList();
+  }
+
+  Future<List<Feedback>> getFeedbackOfToday() async {
+    await _getUserEmail();
     var url = Uri.parse(
-      'http://localhost:8000/feedback-app-api/feedbacks/$_email',
-      // 'http://feedback-app.paul-kluge.de:8000/feedback-app-api/feedbacks/$_email',
-    );
+        '${apiKey}/feedback-app-api/feedbacks/$_email?only_today=True');
     final response =
         await http.get(url, headers: {"Content-Type": "application/json"});
     final List body = json.decode(response.body);

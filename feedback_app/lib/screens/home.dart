@@ -6,6 +6,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:feedback_app/data/price_point.dart';
 
 class HomeScreen extends StatefulWidget {
+  final double _currentSliderValueMotivation;
+  final double _currentSliderValueMuskulaereErschoepfung;
+  final double _currentSliderValueKoerperlicheEinschraenkung;
+  final double _currentSliderValueSchlaf;
+  final double _currentSliderValueStress;
+
+  const HomeScreen(
+      this._currentSliderValueMotivation,
+      this._currentSliderValueMuskulaereErschoepfung,
+      this._currentSliderValueKoerperlicheEinschraenkung,
+      this._currentSliderValueSchlaf,
+      this._currentSliderValueStress,
+      {Key? key})
+      : super(key: key);
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -24,8 +39,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    _currentSliderValueMotivation = widget._currentSliderValueMotivation;
+    _currentSliderValueMuskulaereErschoepfung =
+        widget._currentSliderValueMuskulaereErschoepfung;
+    _currentSliderValueKoerperlicheEinschraenkung =
+        widget._currentSliderValueKoerperlicheEinschraenkung;
+    _currentSliderValueSchlaf = widget._currentSliderValueSchlaf;
+    _currentSliderValueStress = widget._currentSliderValueStress;
     super.initState();
     _loadPreferences();
+    // _getInitialDataForFeedbackForm();
   }
 
   void _loadPreferences() async {
@@ -33,7 +56,6 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _email = prefs.getString('email') ?? '';
     });
-    // debugPrint('enter home screen with: $_email');
   }
 
   Future<void> logout() async {

@@ -28,7 +28,7 @@ class TeamUserFilter(admin.SimpleListFilter):
             if selected_user.groups.all():
                 selected_user_in_queryset = User.objects.filter(email=selected_user)
                 limited_users_list |= selected_user_in_queryset
-                print(selected_user)
+                # print(selected_user)
         return [(c.email, c.fullname) for c in limited_users_list]
 
     def queryset(self, request, queryset):
@@ -70,6 +70,7 @@ class FeedbackAdmin(admin.ModelAdmin):
         return obj.created_at
 
     groups_of_user_with_ordering.admin_order_field = 'User__groups'
+    created_at_renamed.admin_order_field = 'created_at'
     created_at_renamed.short_description = 'Feedback abgegeben am'
 
 class UserAdmin(admin.ModelAdmin):

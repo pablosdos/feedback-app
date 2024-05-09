@@ -56,4 +56,6 @@ class FeedbackListView(generics.ListAPIView):
     serializer_class = FeedbackSerializer
 
     def get_queryset(self):
+        if self.request.GET.get('only_today') == 'True':
+            return Feedback.objects.filter(User_id=self.kwargs['email']).filter(created_at__date=datetime.date.today())
         return Feedback.objects.filter(User_id=self.kwargs['email'])

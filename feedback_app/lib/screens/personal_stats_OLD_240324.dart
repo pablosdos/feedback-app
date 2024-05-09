@@ -79,7 +79,7 @@ class LineChartWidget extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                HomeScreen()));
+                                                HomeScreen(2, 2, 2, 2, 2)));
                                   },
                                   style: TextButton.styleFrom(
                                       backgroundColor:
@@ -394,7 +394,7 @@ class LineChartWidget extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                HomeScreen()));
+                                                HomeScreen(2, 2, 2, 2, 2)));
                                   },
                                   style: TextButton.styleFrom(
                                       backgroundColor:

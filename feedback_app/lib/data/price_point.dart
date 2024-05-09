@@ -153,8 +153,10 @@ Map<String, List<PricePoint>> getMapOfPricePointLists(result) {
 Future feedbacksAndCompleteHint() async {
   var bundle = new Map();
   var result = await _apiClient.getFeedbacks();
+  var resultTodaysFeedback = await _apiClient.getFeedbackOfToday();
   bundle['isComplete'] = getIsComplete(result);
   bundle['mapOfFeedbacks'] = getMapOfPricePointLists(result);
+  bundle['todaysFeedback'] = resultTodaysFeedback;
   return bundle;
 }
 

@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
         // debugPrint('email address: $email_address');
         String accessToken = res['token'];
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomeScreen()));
+            context, MaterialPageRoute(builder: (context) => HomeScreen(2, 2, 2, 2, 2)));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Error: ${res['Message']}'),

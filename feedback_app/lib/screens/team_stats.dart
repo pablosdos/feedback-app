@@ -1,13 +1,12 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:feedback_app/screens/home.dart';
-import 'package:feedback_app/screens/team_stats.dart';
 import 'package:feedback_app/screens/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:feedback_app/data/price_point.dart';
 import 'package:intl/intl.dart';
 
-class LineChartWidget extends StatelessWidget {
+class LineChartWidgetTeam extends StatelessWidget {
   final List<PricePoint> motivationPoints;
   final List<PricePoint> muskulaereErschoepfungPoints;
   final List<PricePoint> koerperlicheEinschraenkungPoints;
@@ -15,7 +14,7 @@ class LineChartWidget extends StatelessWidget {
   final List<PricePoint> stressPoints;
   final bool isComplete;
   // String _email = '';
-  const LineChartWidget(
+  const LineChartWidgetTeam(
       this.motivationPoints,
       this.muskulaereErschoepfungPoints,
       this.koerperlicheEinschraenkungPoints,
@@ -35,21 +34,6 @@ class LineChartWidget extends StatelessWidget {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => const LoginScreen()));
     }
-
-    Future<void> openTeamScreen() async {
-
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => LineChartWidgetTeam(
-                      motivationPoints,
-                      muskulaereErschoepfungPoints,
-                      koerperlicheEinschraenkungPoints,
-                      schlafPoints,
-                      stressPoints,
-                      isComplete)));
-    }
-    
 
     var size = MediaQuery.of(context).size;
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -464,7 +448,34 @@ class LineChartWidget extends StatelessWidget {
                                     ),
                                     SizedBox(height: size.height * 0.04),
                                     TextButton(
-                                      onPressed: openTeamScreen,
+                                      onPressed: () {
+                                        HomeScreen passedHomeScreen =
+                                            HomeScreen(2, 2, 2, 2, 2);
+                                        if (data["todaysFeedback"].isNotEmpty) {
+                                          passedHomeScreen = HomeScreen(
+                                            data["todaysFeedback"][0]
+                                                .motivation
+                                                .toDouble(),
+                                            data["todaysFeedback"][0]
+                                                .muskulaere_erschoepfung
+                                                .toDouble(),
+                                            data["todaysFeedback"][0]
+                                                .koerperliche_einschraenkung
+                                                .toDouble(),
+                                            data["todaysFeedback"][0]
+                                                .schlaf
+                                                .toDouble(),
+                                            data["todaysFeedback"][0]
+                                                .stress
+                                                .toDouble(),
+                                          );
+                                        }
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    passedHomeScreen));
+                                      },
                                       style: TextButton.styleFrom(
                                           backgroundColor:
                                               Colors.blueAccent.shade700,
@@ -474,7 +485,7 @@ class LineChartWidget extends StatelessWidget {
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 15, horizontal: 25)),
                                       child: const Text(
-                                        'Team-Statistik',
+                                        'Gruppen-Statistik',
                                         style: TextStyle(color: Colors.white),
                                       ),
                                     ),

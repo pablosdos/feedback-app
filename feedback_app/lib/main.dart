@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:feedback_app/screens/login.dart';
 import 'package:feedback_app/screens/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 // void main() {
 //   runApp(const MyApp());
 // }
 
 Future<void> main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var email = prefs.getString('email');
   // debugPrint('email exists if visible: $email');
-  runApp(MaterialApp(home: email == null ? LoginScreen() : HomeScreen()));
+  await dotenv.load();
+  runApp(MaterialApp(home: email == null ? LoginScreen() : HomeScreen(2, 2, 2, 2, 2)));
 }
 
 // class MyApp extends StatelessWidget {
