@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:feedback_app/screens/home.dart';
 import 'package:feedback_app/screens/login.dart';
+import 'package:feedback_app/screens/personal_stats.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:feedback_app/data/price_point.dart';
 import 'package:intl/intl.dart';
@@ -130,7 +131,7 @@ class LineChartWidgetTeam extends StatelessWidget {
                                         SizedBox(height: size.height * 0.06),
                                         const Center(
                                           child: Text(
-                                            "Deine 7-Tage-Statistik – Motivation",
+                                            "7-Tage-Team-Statistik ( ) – Motivation",
                                             style: TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold,
@@ -404,6 +405,7 @@ class LineChartWidgetTeam extends StatelessWidget {
                                     /*
                                     BUTTONS
                                     */
+                                    SizedBox(height: size.height * 0.02),
                                     TextButton(
                                       onPressed: () {
                                         HomeScreen passedHomeScreen =
@@ -434,6 +436,8 @@ class LineChartWidgetTeam extends StatelessWidget {
                                                     passedHomeScreen));
                                       },
                                       style: TextButton.styleFrom(
+                                          minimumSize:
+                                              Size(double.infinity, 50),
                                           backgroundColor:
                                               Colors.greenAccent.shade700,
                                           shape: RoundedRectangleBorder(
@@ -446,37 +450,23 @@ class LineChartWidgetTeam extends StatelessWidget {
                                         style: TextStyle(color: Colors.white),
                                       ),
                                     ),
-                                    SizedBox(height: size.height * 0.04),
+                                    SizedBox(height: size.height * 0.01),
                                     TextButton(
                                       onPressed: () {
-                                        HomeScreen passedHomeScreen =
-                                            HomeScreen(2, 2, 2, 2, 2);
-                                        if (data["todaysFeedback"].isNotEmpty) {
-                                          passedHomeScreen = HomeScreen(
-                                            data["todaysFeedback"][0]
-                                                .motivation
-                                                .toDouble(),
-                                            data["todaysFeedback"][0]
-                                                .muskulaere_erschoepfung
-                                                .toDouble(),
-                                            data["todaysFeedback"][0]
-                                                .koerperliche_einschraenkung
-                                                .toDouble(),
-                                            data["todaysFeedback"][0]
-                                                .schlaf
-                                                .toDouble(),
-                                            data["todaysFeedback"][0]
-                                                .stress
-                                                .toDouble(),
-                                          );
-                                        }
-                                        Navigator.pushReplacement(
+                                        Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) =>
-                                                    passedHomeScreen));
+                                                builder: (context) => LineChartWidget(
+                                                    motivationPoints,
+                                                    muskulaereErschoepfungPoints,
+                                                    koerperlicheEinschraenkungPoints,
+                                                    schlafPoints,
+                                                    stressPoints,
+                                                    isComplete)));
                                       },
                                       style: TextButton.styleFrom(
+                                          minimumSize:
+                                              Size(double.infinity, 50),
                                           backgroundColor:
                                               Colors.blueAccent.shade700,
                                           shape: RoundedRectangleBorder(
@@ -485,14 +475,17 @@ class LineChartWidgetTeam extends StatelessWidget {
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 15, horizontal: 25)),
                                       child: const Text(
-                                        'Gruppen-Statistik',
+                                        'Persönliche Statistik',
                                         style: TextStyle(color: Colors.white),
                                       ),
                                     ),
                                     SizedBox(height: size.height * 0.04),
+                          
                                     TextButton(
                                       onPressed: logout,
                                       style: TextButton.styleFrom(
+                                          minimumSize:
+                                              Size(double.infinity, 50),
                                           backgroundColor:
                                               Colors.redAccent.shade700,
                                           shape: RoundedRectangleBorder(

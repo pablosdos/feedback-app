@@ -37,19 +37,17 @@ class LineChartWidget extends StatelessWidget {
     }
 
     Future<void> openTeamScreen() async {
-
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => LineChartWidgetTeam(
-                      motivationPoints,
-                      muskulaereErschoepfungPoints,
-                      koerperlicheEinschraenkungPoints,
-                      schlafPoints,
-                      stressPoints,
-                      isComplete)));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => LineChartWidgetTeam(
+                  motivationPoints,
+                  muskulaereErschoepfungPoints,
+                  koerperlicheEinschraenkungPoints,
+                  schlafPoints,
+                  stressPoints,
+                  isComplete)));
     }
-    
 
     var size = MediaQuery.of(context).size;
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -420,6 +418,7 @@ class LineChartWidget extends StatelessWidget {
                                     /*
                                     BUTTONS
                                     */
+                                    SizedBox(height: size.height * 0.02),
                                     TextButton(
                                       onPressed: () {
                                         HomeScreen passedHomeScreen =
@@ -450,6 +449,8 @@ class LineChartWidget extends StatelessWidget {
                                                     passedHomeScreen));
                                       },
                                       style: TextButton.styleFrom(
+                                          minimumSize:
+                                              Size(double.infinity, 50),
                                           backgroundColor:
                                               Colors.greenAccent.shade700,
                                           shape: RoundedRectangleBorder(
@@ -462,10 +463,12 @@ class LineChartWidget extends StatelessWidget {
                                         style: TextStyle(color: Colors.white),
                                       ),
                                     ),
-                                    SizedBox(height: size.height * 0.04),
+                                    SizedBox(height: size.height * 0.01),
                                     TextButton(
                                       onPressed: openTeamScreen,
                                       style: TextButton.styleFrom(
+                                          minimumSize:
+                                              Size(double.infinity, 50),
                                           backgroundColor:
                                               Colors.blueAccent.shade700,
                                           shape: RoundedRectangleBorder(
@@ -482,6 +485,8 @@ class LineChartWidget extends StatelessWidget {
                                     TextButton(
                                       onPressed: logout,
                                       style: TextButton.styleFrom(
+                                          minimumSize:
+                                              Size(double.infinity, 50),
                                           backgroundColor:
                                               Colors.redAccent.shade700,
                                           shape: RoundedRectangleBorder(
