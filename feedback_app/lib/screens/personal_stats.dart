@@ -191,6 +191,7 @@ class LineChartWidget extends StatelessWidget {
                                         SizedBox(height: size.height * 0.06),
                                       ],
                                     ),
+                                     SizedBox(height: size.height * 0.06),
                                     Stack(
                                       children: <Widget>[
                                         /*
@@ -248,6 +249,7 @@ class LineChartWidget extends StatelessWidget {
                                         SizedBox(height: size.height * 0.06),
                                       ],
                                     ),
+                                     SizedBox(height: size.height * 0.06),
                                     Stack(
                                       children: <Widget>[
                                         /*
@@ -305,6 +307,7 @@ class LineChartWidget extends StatelessWidget {
                                         SizedBox(height: size.height * 0.06),
                                       ],
                                     ),
+                                     SizedBox(height: size.height * 0.04),
                                     Stack(
                                       children: <Widget>[
                                         /*
@@ -360,6 +363,7 @@ class LineChartWidget extends StatelessWidget {
                                         SizedBox(height: size.height * 0.06),
                                       ],
                                     ),
+                                     SizedBox(height: size.height * 0.06),
                                     Stack(
                                       children: <Widget>[
                                         /*
@@ -415,6 +419,7 @@ class LineChartWidget extends StatelessWidget {
                                         SizedBox(height: size.height * 0.06),
                                       ],
                                     ),
+                                     SizedBox(height: size.height * 0.06),
                                     /*
                                     BUTTONS
                                     */

@@ -133,7 +133,7 @@ class LineChartWidgetTeam extends StatelessWidget {
                                         SizedBox(height: size.height * 0.06),
                                         Center(
                                           child: Text(
-                                            "7-Tage-Team-Statistik ($group_name) – Motivation",
+                                            "7-Tage Team-Statistik ($group_name) – Motivation",
                                             style: TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold,
@@ -180,7 +180,7 @@ class LineChartWidgetTeam extends StatelessWidget {
                                         SizedBox(height: size.height * 0.06),
                                       ],
                                     ),
-                                                  SizedBox(height: size.height * 0.06),
+                                    SizedBox(height: size.height * 0.06),
                                     Stack(
                                       children: <Widget>[
                                         /*
@@ -238,7 +238,7 @@ class LineChartWidgetTeam extends StatelessWidget {
                                         SizedBox(height: size.height * 0.06),
                                       ],
                                     ),
-                                                  SizedBox(height: size.height * 0.06),
+                                    SizedBox(height: size.height * 0.06),
                                     Stack(
                                       children: <Widget>[
                                         /*
@@ -296,7 +296,7 @@ class LineChartWidgetTeam extends StatelessWidget {
                                         SizedBox(height: size.height * 0.06),
                                       ],
                                     ),
-                                                  SizedBox(height: size.height * 0.06),
+                                    SizedBox(height: size.height * 0.06),
                                     Stack(
                                       children: <Widget>[
                                         /*
@@ -352,7 +352,7 @@ class LineChartWidgetTeam extends StatelessWidget {
                                         SizedBox(height: size.height * 0.06),
                                       ],
                                     ),
-                                                SizedBox(height: size.height * 0.06),
+                                    SizedBox(height: size.height * 0.06),
                                     Stack(
                                       children: <Widget>[
                                         /*
@@ -408,7 +408,7 @@ class LineChartWidgetTeam extends StatelessWidget {
                                         SizedBox(height: size.height * 0.06),
                                       ],
                                     ),
-                                                  SizedBox(height: size.height * 0.04),
+                                    SizedBox(height: size.height * 0.04),
                                     /*
                                     BUTTONS
                                     */
