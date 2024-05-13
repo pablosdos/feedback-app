@@ -84,22 +84,26 @@ class FeedbackListView(generics.ListAPIView):
                 koerperliche_einschraenkung_value: int = 0
                 schlaf_value: int = 0
                 stress_value: int = 0
+                member_of_group_count: int = qs_of_selected_day.count()
                 for query in qs_of_selected_day:
-                    motivation_value = +query.motivation
-                group_feedback_of_today["User"] = email_or_group_id
+                    motivation_value += query.motivation
+                    muskulaere_erschoepfung_value += query.muskulaere_erschoepfung
+                    koerperliche_einschraenkung_value += query.koerperliche_einschraenkung
+                    schlaf_value += query.schlaf
+                    stress_value += query.stress
+                group_feedback_of_today["group_id"] = int(email_or_group_id)
                 group_feedback_of_today["group_name"] = group_name
-                group_feedback_of_today["motivation"] = motivation_value
+                group_feedback_of_today["motivation"] = round(motivation_value/member_of_group_count)
                 group_feedback_of_today["muskulaere_erschoepfung"] = (
-                    muskulaere_erschoepfung_value
+                    round(muskulaere_erschoepfung_value/member_of_group_count)
                 )
                 group_feedback_of_today["koerperliche_einschraenkung"] = (
-                    koerperliche_einschraenkung_value
+                    round(koerperliche_einschraenkung_value/member_of_group_count)
                 )
-                group_feedback_of_today["schlaf"] = schlaf_value
-                group_feedback_of_today["stress"] = stress_value
+                group_feedback_of_today["schlaf"] = round(schlaf_value/member_of_group_count)
+                group_feedback_of_today["stress"] = round(stress_value/member_of_group_count)
                 group_feedback_of_today["created_at"] = single_date
                 list_of_this_weeks_group_feedbacks.append(group_feedback_of_today)
-            print(list_of_this_weeks_group_feedbacks)
             # return list_of_this_weeks_group_feedbacks
             return response.Response(list_of_this_weeks_group_feedbacks, status=status.HTTP_200_OK)
         queryset = self.get_queryset()
@@ -114,3 +118,4 @@ class FeedbackListView(generics.ListAPIView):
                 created_at__date=today
             )
         return Feedback.objects.filter(User_id=email_or_group_id)
+    

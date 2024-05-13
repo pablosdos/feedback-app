@@ -47,7 +47,7 @@ class LineChartWidgetTeam extends StatelessWidget {
         body: Form(
           key: _formKey,
           child: FutureBuilder(
-            future: feedbacksAndCompleteHint(),
+            future: feedbacksAndCompleteHintOfGroup(),
             initialData: "Code sample",
             builder: (BuildContext context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -92,6 +92,8 @@ class LineChartWidgetTeam extends StatelessWidget {
                   data["mapOfFeedbacks"]["stress"].forEach((feedbacksstress) {
                     validListstress.add(feedbacksstress);
                   });
+                  final String group_name = data["group_name"];
+
                   /*
                   if THERE IS
                   7 days
@@ -129,9 +131,9 @@ class LineChartWidgetTeam extends StatelessWidget {
                                           GRAPHS
                                           */
                                         SizedBox(height: size.height * 0.06),
-                                        const Center(
+                                        Center(
                                           child: Text(
-                                            "7-Tage-Team-Statistik ( ) – Motivation",
+                                            "7-Tage-Team-Statistik ($group_name) – Motivation",
                                             style: TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold,
@@ -178,6 +180,7 @@ class LineChartWidgetTeam extends StatelessWidget {
                                         SizedBox(height: size.height * 0.06),
                                       ],
                                     ),
+                                                  SizedBox(height: size.height * 0.06),
                                     Stack(
                                       children: <Widget>[
                                         /*
@@ -235,6 +238,7 @@ class LineChartWidgetTeam extends StatelessWidget {
                                         SizedBox(height: size.height * 0.06),
                                       ],
                                     ),
+                                                  SizedBox(height: size.height * 0.06),
                                     Stack(
                                       children: <Widget>[
                                         /*
@@ -292,6 +296,7 @@ class LineChartWidgetTeam extends StatelessWidget {
                                         SizedBox(height: size.height * 0.06),
                                       ],
                                     ),
+                                                  SizedBox(height: size.height * 0.06),
                                     Stack(
                                       children: <Widget>[
                                         /*
@@ -347,6 +352,7 @@ class LineChartWidgetTeam extends StatelessWidget {
                                         SizedBox(height: size.height * 0.06),
                                       ],
                                     ),
+                                                SizedBox(height: size.height * 0.06),
                                     Stack(
                                       children: <Widget>[
                                         /*
@@ -402,6 +408,7 @@ class LineChartWidgetTeam extends StatelessWidget {
                                         SizedBox(height: size.height * 0.06),
                                       ],
                                     ),
+                                                  SizedBox(height: size.height * 0.04),
                                     /*
                                     BUTTONS
                                     */
@@ -480,7 +487,7 @@ class LineChartWidgetTeam extends StatelessWidget {
                                       ),
                                     ),
                                     SizedBox(height: size.height * 0.04),
-                          
+
                                     TextButton(
                                       onPressed: logout,
                                       style: TextButton.styleFrom(
@@ -534,7 +541,7 @@ class LineChartWidgetTeam extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  SizedBox(height: size.height * 0.08),
+                                  SizedBox(height: size.height * 0.02),
                                   const Center(
                                       child: Text(
                                     "Vielen Dank für deine Eingabe. Ist für 7 aufeinander folgende Tage Feedback eingereicht, dann ist die Statistik hier einsehbar.",
@@ -543,6 +550,7 @@ class LineChartWidgetTeam extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   )),
+                                  SizedBox(height: size.height * 0.04),
                                   TextButton(
                                     onPressed: () {
                                       HomeScreen passedHomeScreen =
@@ -573,6 +581,7 @@ class LineChartWidgetTeam extends StatelessWidget {
                                                   passedHomeScreen));
                                     },
                                     style: TextButton.styleFrom(
+                                        minimumSize: Size(double.infinity, 50),
                                         backgroundColor:
                                             Colors.greenAccent.shade700,
                                         shape: RoundedRectangleBorder(
@@ -585,13 +594,39 @@ class LineChartWidgetTeam extends StatelessWidget {
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),
+                                  SizedBox(height: size.height * 0.01),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => LineChartWidget(
+                                                  motivationPoints,
+                                                  muskulaereErschoepfungPoints,
+                                                  koerperlicheEinschraenkungPoints,
+                                                  schlafPoints,
+                                                  stressPoints,
+                                                  isComplete)));
+                                    },
+                                    style: TextButton.styleFrom(
+                                        minimumSize: Size(double.infinity, 50),
+                                        backgroundColor:
+                                            Colors.blueAccent.shade700,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 15, horizontal: 25)),
+                                    child: const Text(
+                                      'Persönliche Statistik',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
                                   SizedBox(height: size.height * 0.04),
-                                  /*
-                                  BUTTONS
-                                  */
                                   TextButton(
                                     onPressed: logout,
                                     style: TextButton.styleFrom(
+                                        minimumSize: Size(double.infinity, 50),
                                         backgroundColor:
                                             Colors.redAccent.shade700,
                                         shape: RoundedRectangleBorder(

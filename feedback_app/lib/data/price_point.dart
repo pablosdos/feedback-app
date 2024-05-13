@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:collection/collection.dart';
 import 'package:feedback_app/core/api_client.dart';
@@ -22,19 +23,7 @@ class PricePoint {
 final ApiClient _apiClient = ApiClient();
 
 List<PricePoint> get motivationPoints {
-  final Random random = Random();
   final motivationNumbers = <double>[];
-
-  for (var i = 0; i <= 6; i++) {
-    motivationNumbers.add(random.nextDouble());
-  }
-  // motivationNumbers.clear();
-  // print('original');
-  // print(motivationNumbers);
-  // print(motivationNumbers
-  //     .mapIndexed(
-  //         (index, element) => PricePoint(x: index.toDouble(), y: element))
-  //     .toList()[0].y);
   return motivationNumbers
       .mapIndexed(
           (index, element) => PricePoint(x: index.toDouble(), y: element))
@@ -88,7 +77,6 @@ bool getIsComplete(result) {
     for (var j = 0; j < lastSevenDays.length; j++) {
       if (result[i].created_at.toString().substring(0, 10) ==
           lastSevenDays[j].toString().substring(0, 10)) {
-        // print(lastSevenDays[j].toString());
         counter++;
       }
     }
@@ -157,6 +145,18 @@ Future feedbacksAndCompleteHint() async {
   bundle['isComplete'] = getIsComplete(result);
   bundle['mapOfFeedbacks'] = getMapOfPricePointLists(result);
   bundle['todaysFeedback'] = resultTodaysFeedback;
+  bundle['group_name'] = result[0].group_of_user.toString();
+  return bundle;
+}
+
+Future feedbacksAndCompleteHintOfGroup() async {
+  var bundle = new Map();
+  var result = await _apiClient.getFeedbacksOfGroup();
+  var resultTodaysFeedback = await _apiClient.getFeedbackOfToday();
+  bundle['isComplete'] = getIsComplete(result);
+  bundle['mapOfFeedbacks'] = getMapOfPricePointLists(result);
+  bundle['todaysFeedback'] = resultTodaysFeedback;
+  bundle['group_name'] = result[0].group_name.toString();
   return bundle;
 }
 

@@ -464,23 +464,24 @@ class LineChartWidget extends StatelessWidget {
                                       ),
                                     ),
                                     SizedBox(height: size.height * 0.01),
-                                    TextButton(
-                                      onPressed: openTeamScreen,
-                                      style: TextButton.styleFrom(
-                                          minimumSize:
-                                              Size(double.infinity, 50),
-                                          backgroundColor:
-                                              Colors.blueAccent.shade700,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5)),
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 15, horizontal: 25)),
-                                      child: const Text(
-                                        'Team-Statistik',
-                                        style: TextStyle(color: Colors.white),
+                                    if (data["group_name"] != '')
+                                      TextButton(
+                                        onPressed: openTeamScreen,
+                                        style: TextButton.styleFrom(
+                                            minimumSize:
+                                                Size(double.infinity, 50),
+                                            backgroundColor:
+                                                Colors.blueAccent.shade700,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(5)),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 15, horizontal: 25)),
+                                        child: const Text(
+                                          'Team-Statistik',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
                                       ),
-                                    ),
                                     SizedBox(height: size.height * 0.04),
                                     TextButton(
                                       onPressed: logout,
@@ -535,7 +536,7 @@ class LineChartWidget extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  SizedBox(height: size.height * 0.08),
+                                  SizedBox(height: size.height * 0.02),
                                   const Center(
                                       child: Text(
                                     "Vielen Dank für deine Eingabe. Ist für 7 aufeinander folgende Tage Feedback eingereicht, dann ist die Statistik hier einsehbar.",
@@ -544,6 +545,7 @@ class LineChartWidget extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   )),
+                                  SizedBox(height: size.height * 0.04),
                                   TextButton(
                                     onPressed: () {
                                       HomeScreen passedHomeScreen =
@@ -574,6 +576,7 @@ class LineChartWidget extends StatelessWidget {
                                                   passedHomeScreen));
                                     },
                                     style: TextButton.styleFrom(
+                                        minimumSize: Size(double.infinity, 50),
                                         backgroundColor:
                                             Colors.greenAccent.shade700,
                                         shape: RoundedRectangleBorder(
@@ -586,13 +589,28 @@ class LineChartWidget extends StatelessWidget {
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),
+                                  SizedBox(height: size.height * 0.01),
+                                  TextButton(
+                                    onPressed: openTeamScreen,
+                                    style: TextButton.styleFrom(
+                                        minimumSize: Size(double.infinity, 50),
+                                        backgroundColor:
+                                            Colors.blueAccent.shade700,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 15, horizontal: 25)),
+                                    child: const Text(
+                                      'Team-Statistik',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
                                   SizedBox(height: size.height * 0.04),
-                                  /*
-                                  BUTTONS
-                                  */
                                   TextButton(
                                     onPressed: logout,
                                     style: TextButton.styleFrom(
+                                        minimumSize: Size(double.infinity, 50),
                                         backgroundColor:
                                             Colors.redAccent.shade700,
                                         shape: RoundedRectangleBorder(

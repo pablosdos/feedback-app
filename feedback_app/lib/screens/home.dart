@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:feedback_app/core/api_client.dart';
 import 'package:feedback_app/screens/login.dart';
 import 'package:feedback_app/screens/personal_stats.dart';
+import 'package:feedback_app/screens/team_stats.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:feedback_app/data/price_point.dart';
 
@@ -30,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final ApiClient _apiClient = ApiClient();
   String _email = '';
+  bool userHasGroup = false;
 
   double _currentSliderValueMotivation = 3;
   double _currentSliderValueMuskulaereErschoepfung = 3;
@@ -56,6 +58,10 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _email = prefs.getString('email') ?? '';
     });
+    // not working – should be passed from the previous screen
+    // final user_info = await _apiClient.getUserWithFeedbacks(_email);
+    // userHasGroup = user_info["groups"].isNotEmpty;
+    // prefs.setString('email', emailController.text);
   }
 
   Future<void> logout() async {
@@ -107,6 +113,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> openTeamScreen() async {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => LineChartWidgetTeam(
+                  motivationPoints,
+                  muskulaereErschoepfungPoints,
+                  koerperlicheEinschraenkungPoints,
+                  schlafPoints,
+                  stressPoints,
+                  isComplete)));
+    }
+
     var size = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: Colors.blueGrey[200],
@@ -201,9 +220,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   _currentSliderValueStress = value;
                                 });
                               }),
+                          SizedBox(height: size.height * 0.04),
                           TextButton(
                             onPressed: submitFeedback,
                             style: TextButton.styleFrom(
+                                minimumSize: Size(double.infinity, 50),
                                 backgroundColor: Colors.greenAccent.shade700,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(5)),
@@ -214,10 +235,27 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
+                          SizedBox(height: size.height * 0.01),
+                          if (userHasGroup == true)
+                            TextButton(
+                              onPressed: openTeamScreen,
+                              style: TextButton.styleFrom(
+                                  minimumSize: Size(double.infinity, 50),
+                                  backgroundColor: Colors.blueAccent.shade700,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5)),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 15, horizontal: 25)),
+                              child: const Text(
+                                'Team-Statistik',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
                           SizedBox(height: size.height * 0.04),
                           TextButton(
                             onPressed: logout,
                             style: TextButton.styleFrom(
+                                minimumSize: Size(double.infinity, 50),
                                 backgroundColor: Colors.redAccent.shade700,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(5)),
