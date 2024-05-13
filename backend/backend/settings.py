@@ -133,12 +133,12 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 # DEVELOPMENT
-STATIC_ROOT = (
-    "/Users/paulkluge/Documents/Work/Codebase/Michel/condition_check/backend/static"
-)
+# STATIC_ROOT = (
+#     "/Users/paulkluge/Documents/Work/Codebase/Michel/condition_check/backend/static"
+# )
 
 # PRODUCTION
-# STATIC_ROOT = "/home/www.paul-kluge.de/feedback-app.paul-kluge.de/backend/static"
+STATIC_ROOT = "/home/www.paul-kluge.de/feedback-app.paul-kluge.de/backend/static"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
