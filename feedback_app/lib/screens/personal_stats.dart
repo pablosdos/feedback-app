@@ -1,10 +1,10 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:feedback_app/screens/home.dart';
-import 'package:feedback_app/screens/team_stats.dart';
-import 'package:feedback_app/screens/login.dart';
+import 'package:coopmetrics/screens/home.dart';
+import 'package:coopmetrics/screens/team_stats.dart';
+import 'package:coopmetrics/screens/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:feedback_app/data/price_point.dart';
+import 'package:coopmetrics/data/price_point.dart';
 import 'package:intl/intl.dart';
 
 class LineChartWidget extends StatelessWidget {

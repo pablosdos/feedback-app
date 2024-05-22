@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:feedback_app/core/api_client.dart';
-import 'package:feedback_app/screens/login.dart';
-import 'package:feedback_app/screens/personal_stats.dart';
-import 'package:feedback_app/screens/team_stats.dart';
+import 'package:coopmetrics/core/api_client.dart';
+import 'package:coopmetrics/screens/login.dart';
+import 'package:coopmetrics/screens/personal_stats.dart';
+import 'package:coopmetrics/screens/team_stats.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:feedback_app/data/price_point.dart';
+import 'package:coopmetrics/data/price_point.dart';
 
 class HomeScreen extends StatefulWidget {
   final double _currentSliderValueMotivation;

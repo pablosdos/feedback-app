@@ -1,8 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:feedback_app/core/api_client.dart';
-import 'package:feedback_app/screens/home.dart';
-import 'package:feedback_app/utils/validator.dart';
+import 'package:coopmetrics/core/api_client.dart';
+import 'package:coopmetrics/screens/home.dart';
+import 'package:coopmetrics/utils/validator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/foundation.dart';
 

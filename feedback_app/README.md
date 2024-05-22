@@ -1,4 +1,4 @@
-# feedback_app
+# CoopMetrics
 
 A new Flutter project.
 

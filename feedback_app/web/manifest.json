@@ -1,6 +1,6 @@
 {
-    "name": "feedback_app",
-    "short_name": "feedback_app",
+    "name": "coopmetrics",
+    "short_name": "coopmetrics",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

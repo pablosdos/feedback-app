@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:collection/collection.dart';
-import 'package:feedback_app/core/api_client.dart';
+import 'package:coopmetrics/core/api_client.dart';
 import 'dart:developer' as logging;
 
 final lastSevenDays = List<DateTime>.generate(

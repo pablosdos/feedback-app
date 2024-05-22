@@ -23,7 +23,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.example.feedback_app"
+    namespace "com.example.coopmetrics"
     compileSdk flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
