@@ -1,13 +1,11 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:coopmetrics/core/api_client.dart';
 import 'package:coopmetrics/screens/home.dart';
 import 'package:coopmetrics/utils/validator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/foundation.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -39,11 +37,11 @@ class _LoginScreenState extends State<LoginScreen> {
         // debugPrint(res);
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('email', emailController.text);
-        String? email_address = prefs.getString('email');
+        String? emailAddress = prefs.getString('email');
         // debugPrint('email address: $email_address');
         String accessToken = res['token'];
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomeScreen(2, 2, 2, 2, 2)));
+            context, MaterialPageRoute(builder: (context) => const HomeScreen(2, 2, 2, 2, 2)));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Error: ${res['Message']}'),

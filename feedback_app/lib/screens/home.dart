@@ -19,8 +19,7 @@ class HomeScreen extends StatefulWidget {
       this._currentSliderValueKoerperlicheEinschraenkung,
       this._currentSliderValueSchlaf,
       this._currentSliderValueStress,
-      {Key? key})
-      : super(key: key);
+      {super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -224,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           TextButton(
                             onPressed: submitFeedback,
                             style: TextButton.styleFrom(
-                                minimumSize: Size(double.infinity, 50),
+                                minimumSize: const Size(double.infinity, 50),
                                 backgroundColor: Colors.greenAccent.shade700,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(5)),
@@ -240,7 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             TextButton(
                               onPressed: openTeamScreen,
                               style: TextButton.styleFrom(
-                                  minimumSize: Size(double.infinity, 50),
+                                  minimumSize: const Size(double.infinity, 50),
                                   backgroundColor: Colors.blueAccent.shade700,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(5)),
@@ -255,7 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           TextButton(
                             onPressed: logout,
                             style: TextButton.styleFrom(
-                                minimumSize: Size(double.infinity, 50),
+                                minimumSize: const Size(double.infinity, 50),
                                 backgroundColor: Colors.redAccent.shade700,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(5)),

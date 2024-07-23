@@ -21,8 +21,7 @@ class LineChartWidget extends StatelessWidget {
       this.schlafPoints,
       this.stressPoints,
       this.isComplete,
-      {Key? key})
-      : super(key: key);
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +35,13 @@ class LineChartWidget extends StatelessWidget {
     }
 
     var size = MediaQuery.of(context).size;
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     debugPrint('motivationPoints');
-    debugPrint(this.motivationPoints.toString());
+    debugPrint(motivationPoints.toString());
     return Scaffold(
         backgroundColor: Colors.blueGrey[200],
         body: Form(
-          key: _formKey,
+          key: formKey,
           child: (isComplete == false)
               ? Stack(children: [
                   SizedBox(
@@ -79,7 +78,7 @@ class LineChartWidget extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                HomeScreen(2, 2, 2, 2, 2)));
+                                                const HomeScreen(2, 2, 2, 2, 2)));
                                   },
                                   style: TextButton.styleFrom(
                                       backgroundColor:
@@ -169,7 +168,7 @@ class LineChartWidget extends StatelessWidget {
                                                     FlSpot(point.x, point.y))
                                                 .toList(),
                                             isCurved: false,
-                                            dotData: FlDotData(
+                                            dotData: const FlDotData(
                                               show: false,
                                             ),
                                             color: Colors.red),
@@ -178,17 +177,17 @@ class LineChartWidget extends StatelessWidget {
                                           border: const Border(
                                               bottom: BorderSide(),
                                               left: BorderSide())),
-                                      gridData: FlGridData(show: false),
+                                      gridData: const FlGridData(show: false),
                                       titlesData: FlTitlesData(
                                         bottomTitles: AxisTitles(
                                             sideTitles: _bottomTitles),
-                                        leftTitles: AxisTitles(
+                                        leftTitles: const AxisTitles(
                                             sideTitles:
                                                 SideTitles(showTitles: false)),
-                                        topTitles: AxisTitles(
+                                        topTitles: const AxisTitles(
                                             sideTitles:
                                                 SideTitles(showTitles: false)),
-                                        rightTitles: AxisTitles(
+                                        rightTitles: const AxisTitles(
                                             sideTitles:
                                                 SideTitles(showTitles: false)),
                                       ),
@@ -217,7 +216,7 @@ class LineChartWidget extends StatelessWidget {
                                                     FlSpot(point.x, point.y))
                                                 .toList(),
                                             isCurved: false,
-                                            dotData: FlDotData(
+                                            dotData: const FlDotData(
                                               show: false,
                                             ),
                                             color: Colors.red),
@@ -226,17 +225,17 @@ class LineChartWidget extends StatelessWidget {
                                           border: const Border(
                                               bottom: BorderSide(),
                                               left: BorderSide())),
-                                      gridData: FlGridData(show: false),
+                                      gridData: const FlGridData(show: false),
                                       titlesData: FlTitlesData(
                                         bottomTitles: AxisTitles(
                                             sideTitles: _bottomTitles),
-                                        leftTitles: AxisTitles(
+                                        leftTitles: const AxisTitles(
                                             sideTitles:
                                                 SideTitles(showTitles: false)),
-                                        topTitles: AxisTitles(
+                                        topTitles: const AxisTitles(
                                             sideTitles:
                                                 SideTitles(showTitles: false)),
-                                        rightTitles: AxisTitles(
+                                        rightTitles: const AxisTitles(
                                             sideTitles:
                                                 SideTitles(showTitles: false)),
                                       ),
@@ -266,7 +265,7 @@ class LineChartWidget extends StatelessWidget {
                                                         point.x, point.y))
                                                     .toList(),
                                             isCurved: false,
-                                            dotData: FlDotData(
+                                            dotData: const FlDotData(
                                               show: false,
                                             ),
                                             color: Colors.red),
@@ -275,17 +274,17 @@ class LineChartWidget extends StatelessWidget {
                                           border: const Border(
                                               bottom: BorderSide(),
                                               left: BorderSide())),
-                                      gridData: FlGridData(show: false),
+                                      gridData: const FlGridData(show: false),
                                       titlesData: FlTitlesData(
                                         bottomTitles: AxisTitles(
                                             sideTitles: _bottomTitles),
-                                        leftTitles: AxisTitles(
+                                        leftTitles: const AxisTitles(
                                             sideTitles:
                                                 SideTitles(showTitles: false)),
-                                        topTitles: AxisTitles(
+                                        topTitles: const AxisTitles(
                                             sideTitles:
                                                 SideTitles(showTitles: false)),
-                                        rightTitles: AxisTitles(
+                                        rightTitles: const AxisTitles(
                                             sideTitles:
                                                 SideTitles(showTitles: false)),
                                       ),
@@ -314,7 +313,7 @@ class LineChartWidget extends StatelessWidget {
                                                     FlSpot(point.x, point.y))
                                                 .toList(),
                                             isCurved: false,
-                                            dotData: FlDotData(
+                                            dotData: const FlDotData(
                                               show: false,
                                             ),
                                             color: Colors.red),
@@ -323,17 +322,17 @@ class LineChartWidget extends StatelessWidget {
                                           border: const Border(
                                               bottom: BorderSide(),
                                               left: BorderSide())),
-                                      gridData: FlGridData(show: false),
+                                      gridData: const FlGridData(show: false),
                                       titlesData: FlTitlesData(
                                         bottomTitles: AxisTitles(
                                             sideTitles: _bottomTitles),
-                                        leftTitles: AxisTitles(
+                                        leftTitles: const AxisTitles(
                                             sideTitles:
                                                 SideTitles(showTitles: false)),
-                                        topTitles: AxisTitles(
+                                        topTitles: const AxisTitles(
                                             sideTitles:
                                                 SideTitles(showTitles: false)),
-                                        rightTitles: AxisTitles(
+                                        rightTitles: const AxisTitles(
                                             sideTitles:
                                                 SideTitles(showTitles: false)),
                                       ),
@@ -362,7 +361,7 @@ class LineChartWidget extends StatelessWidget {
                                                     FlSpot(point.x, point.y))
                                                 .toList(),
                                             isCurved: false,
-                                            dotData: FlDotData(
+                                            dotData: const FlDotData(
                                               show: false,
                                             ),
                                             color: Colors.red),
@@ -371,17 +370,17 @@ class LineChartWidget extends StatelessWidget {
                                           border: const Border(
                                               bottom: BorderSide(),
                                               left: BorderSide())),
-                                      gridData: FlGridData(show: false),
+                                      gridData: const FlGridData(show: false),
                                       titlesData: FlTitlesData(
                                         bottomTitles: AxisTitles(
                                             sideTitles: _bottomTitles),
-                                        leftTitles: AxisTitles(
+                                        leftTitles: const AxisTitles(
                                             sideTitles:
                                                 SideTitles(showTitles: false)),
-                                        topTitles: AxisTitles(
+                                        topTitles: const AxisTitles(
                                             sideTitles:
                                                 SideTitles(showTitles: false)),
-                                        rightTitles: AxisTitles(
+                                        rightTitles: const AxisTitles(
                                             sideTitles:
                                                 SideTitles(showTitles: false)),
                                       ),
@@ -394,7 +393,7 @@ class LineChartWidget extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                HomeScreen(2, 2, 2, 2, 2)));
+                                                const HomeScreen(2, 2, 2, 2, 2)));
                                   },
                                   style: TextButton.styleFrom(
                                       backgroundColor:
@@ -444,37 +443,36 @@ class LineChartWidget extends StatelessWidget {
           switch (value.toInt()) {
             case 0:
               text = DateFormat('EEEE')
-                  .format(date.subtract(Duration(days: 6)))
+                  .format(date.subtract(const Duration(days: 6)))
                   .substring(0, 2);
               break;
             case 1:
               text = DateFormat('EEEE')
-                  .format(date.subtract(Duration(days: 5)))
+                  .format(date.subtract(const Duration(days: 5)))
                   .substring(0, 2);
               break;
             case 2:
               text = DateFormat('EEEE')
-                  .format(date.subtract(Duration(days: 4)))
+                  .format(date.subtract(const Duration(days: 4)))
                   .substring(0, 2);
               break;
             case 3:
               text = DateFormat('EEEE')
-                  .format(date.subtract(Duration(days: 3)))
+                  .format(date.subtract(const Duration(days: 3)))
                   .substring(0, 2);
               break;
             case 4:
               text = DateFormat('EEEE')
-                  .format(date.subtract(Duration(days: 2)))
+                  .format(date.subtract(const Duration(days: 2)))
                   .substring(0, 2);
               break;
             case 5:
               text = DateFormat('EEEE')
-                  .format(date.subtract(Duration(days: 1)))
+                  .format(date.subtract(const Duration(days: 1)))
                   .substring(0, 2);
               break;
             case 6:
-              text = DateFormat('EEEE').format(date).substring(0, 2);
-              ;
+              text = DateFormat('EEEE').format(date).substring(0, 2); {}
               break;
           }
           return Text(text);

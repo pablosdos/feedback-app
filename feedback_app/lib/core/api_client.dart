@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 // for debugPrint
-import 'package:flutter/material.dart';
 
 class Feedback {
   int? id;
@@ -53,11 +52,11 @@ class ApiClient {
   final Dio _dio = Dio();
   String _email = '';
   int _group = 0;
-  String apiKey = dotenv.env['API_URL']!;
+  String apiUrl = dotenv.env['API_URL']!;
   Future<dynamic> login(String email, String password) async {
     try {
       Response response = await _dio.post(
-        '${apiKey}/api-token-auth/',
+        '$apiUrl/api-token-auth/',
         data: {
           'username': email,
           'password': password,
@@ -79,7 +78,7 @@ class ApiClient {
   ) async {
     try {
       Response response = await _dio.post(
-        '${apiKey}/feedback-app-api/feedbacks/',
+        '$apiUrl/feedback-app-api/feedbacks/',
         data: {
           "User": email,
           "motivation": motivation,
@@ -95,10 +94,10 @@ class ApiClient {
     }
   }
 
-  Future<dynamic> getUserWithFeedbacks(user_email) async {
+  Future<dynamic> getUserWithFeedbacks(userEmail) async {
     try {
       Response response =
-          await _dio.get('${apiKey}/feedback-app-api/users/$user_email');
+          await _dio.get('$apiUrl/feedback-app-api/users/$userEmail');
       return response.data;
     } on DioError catch (e) {
       return e.response!.data;
@@ -122,7 +121,7 @@ class ApiClient {
 
   Future<List<Feedback>> getFeedbacks() async {
     await _getUserEmail();
-    var url = Uri.parse('${apiKey}/feedback-app-api/feedbacks/$_email');
+    var url = Uri.parse('$apiUrl/feedback-app-api/feedbacks/$_email');
     final response =
         await http.get(url, headers: {"Content-Type": "application/json"});
     final List body = json.decode(response.body);
@@ -132,7 +131,7 @@ class ApiClient {
   Future<List<Feedback>> getFeedbackOfToday() async {
     await _getUserEmail();
     var url = Uri.parse(
-        '${apiKey}/feedback-app-api/feedbacks/$_email?only_today=True');
+        '$apiUrl/feedback-app-api/feedbacks/$_email?only_today=True');
     final response =
         await http.get(url, headers: {"Content-Type": "application/json"});
     final List body = json.decode(response.body);
@@ -142,7 +141,7 @@ class ApiClient {
   Future<List<Feedback>> getFeedbacksOfGroup() async {
     await _getUserEmail();
     await _getUserGroup();
-    var url = Uri.parse('${apiKey}/feedback-app-api/feedbacks/$_group?arithmetic_mean=True');
+    var url = Uri.parse('$apiUrl/feedback-app-api/feedbacks/$_group?arithmetic_mean=True');
     final response =
         await http.get(url, headers: {"Content-Type": "application/json"});
     final List body = json.decode(response.body);

@@ -1,9 +1,5 @@
-import 'dart:math';
-import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:collection/collection.dart';
 import 'package:coopmetrics/core/api_client.dart';
-import 'dart:developer' as logging;
 
 final lastSevenDays = List<DateTime>.generate(
     7,
@@ -93,8 +89,8 @@ Map<String, List<PricePoint>> getMapOfPricePointLists(result) {
   int counter = 0;
   Map<String, List<PricePoint>> mapOfPricePointLists = {};
   final motivationNumbers = <double>[];
-  final muskulaere_erschoepfungNumbers = <double>[];
-  final koerperliche_einschraenkungNumbers = <double>[];
+  final muskulaereErschoepfungnumbers = <double>[];
+  final koerperlicheEinschraenkungnumbers = <double>[];
   final schlafNumbers = <double>[];
   final stressNumbers = <double>[];
 
@@ -103,8 +99,8 @@ Map<String, List<PricePoint>> getMapOfPricePointLists(result) {
       if (result[i].created_at.toString().substring(0, 10) ==
           lastSevenDays[j].toString().substring(0, 10)) {
         motivationNumbers.add(result[i].motivation.toDouble());
-        muskulaere_erschoepfungNumbers.add(result[i].muskulaere_erschoepfung.toDouble());
-        koerperliche_einschraenkungNumbers.add(result[i].koerperliche_einschraenkung.toDouble());
+        muskulaereErschoepfungnumbers.add(result[i].muskulaere_erschoepfung.toDouble());
+        koerperlicheEinschraenkungnumbers.add(result[i].koerperliche_einschraenkung.toDouble());
         schlafNumbers.add(result[i].schlaf.toDouble());
         stressNumbers.add(result[i].stress.toDouble());
         counter++;
@@ -117,12 +113,12 @@ Map<String, List<PricePoint>> getMapOfPricePointLists(result) {
           (index, element) => PricePoint(x: index.toDouble(), y: element))
       .toList();
   mapOfPricePointLists['muskulaere_erschoepfung'] =
-      muskulaere_erschoepfungNumbers
+      muskulaereErschoepfungnumbers
           .mapIndexed(
               (index, element) => PricePoint(x: index.toDouble(), y: element))
           .toList();
   mapOfPricePointLists['koerperliche_einschraenkung'] =
-      koerperliche_einschraenkungNumbers
+      koerperlicheEinschraenkungnumbers
           .mapIndexed(
               (index, element) => PricePoint(x: index.toDouble(), y: element))
           .toList();
@@ -139,7 +135,7 @@ Map<String, List<PricePoint>> getMapOfPricePointLists(result) {
 }
 
 Future feedbacksAndCompleteHint() async {
-  var bundle = new Map();
+  var bundle = {};
   var result = await _apiClient.getFeedbacks();
   var resultTodaysFeedback = await _apiClient.getFeedbackOfToday();
   bundle['isComplete'] = getIsComplete(result);
@@ -150,7 +146,7 @@ Future feedbacksAndCompleteHint() async {
 }
 
 Future feedbacksAndCompleteHintOfGroup() async {
-  var bundle = new Map();
+  var bundle = {};
   var result = await _apiClient.getFeedbacksOfGroup();
   var resultTodaysFeedback = await _apiClient.getFeedbackOfToday();
   bundle['isComplete'] = getIsComplete(result);

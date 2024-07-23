@@ -22,8 +22,7 @@ class LineChartWidget extends StatelessWidget {
       this.schlafPoints,
       this.stressPoints,
       this.isComplete,
-      {Key? key})
-      : super(key: key);
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,15 +49,15 @@ class LineChartWidget extends StatelessWidget {
     }
 
     var size = MediaQuery.of(context).size;
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     // List<int> intList = [1, 2, 3];
-    var intList = new Map();
+    var intList = {};
     intList['Usrname'] = 'admin';
     intList['Password'] = 'admin@123';
     return Scaffold(
         backgroundColor: Colors.blueGrey[200],
         body: Form(
-          key: _formKey,
+          key: formKey,
           child: FutureBuilder(
             future: feedbacksAndCompleteHint(),
             initialData: "Code sample",
@@ -85,17 +84,17 @@ class LineChartWidget extends StatelessWidget {
                       .forEach((feedbacksMotivation) {
                     validListMotivation.add(feedbacksMotivation);
                   });
-                  var validListmuskulaere_erschoepfung = <PricePoint>[];
+                  var validlistmuskulaereErschoepfung = <PricePoint>[];
                   data["mapOfFeedbacks"]["muskulaere_erschoepfung"]
-                      .forEach((feedbacksmuskulaere_erschoepfung) {
-                    validListmuskulaere_erschoepfung
-                        .add(feedbacksmuskulaere_erschoepfung);
+                      .forEach((feedbacksmuskulaereErschoepfung) {
+                    validlistmuskulaereErschoepfung
+                        .add(feedbacksmuskulaereErschoepfung);
                   });
-                  var validListkoerperliche_einschraenkung = <PricePoint>[];
+                  var validlistkoerperlicheEinschraenkung = <PricePoint>[];
                   data["mapOfFeedbacks"]["koerperliche_einschraenkung"]
-                      .forEach((feedbackskoerperliche_einschraenkung) {
-                    validListkoerperliche_einschraenkung
-                        .add(feedbackskoerperliche_einschraenkung);
+                      .forEach((feedbackskoerperlicheEinschraenkung) {
+                    validlistkoerperlicheEinschraenkung
+                        .add(feedbackskoerperlicheEinschraenkung);
                   });
                   var validListschlaf = <PricePoint>[];
                   data["mapOfFeedbacks"]["schlaf"].forEach((feedbacksschlaf) {
@@ -162,7 +161,7 @@ class LineChartWidget extends StatelessWidget {
                                                             point.x, point.y))
                                                         .toList(),
                                                     isCurved: false,
-                                                    dotData: FlDotData(
+                                                    dotData: const FlDotData(
                                                       show: false,
                                                     ),
                                                     color: Colors.red),
@@ -171,17 +170,17 @@ class LineChartWidget extends StatelessWidget {
                                                   border: const Border(
                                                       bottom: BorderSide(),
                                                       left: BorderSide())),
-                                              gridData: FlGridData(show: false),
+                                              gridData: const FlGridData(show: false),
                                               titlesData: FlTitlesData(
                                                 bottomTitles: AxisTitles(
                                                     sideTitles: _bottomTitles),
-                                                leftTitles: AxisTitles(
+                                                leftTitles: const AxisTitles(
                                                     sideTitles: SideTitles(
                                                         showTitles: false)),
-                                                topTitles: AxisTitles(
+                                                topTitles: const AxisTitles(
                                                     sideTitles: SideTitles(
                                                         showTitles: false)),
-                                                rightTitles: AxisTitles(
+                                                rightTitles: const AxisTitles(
                                                     sideTitles: SideTitles(
                                                         showTitles: false)),
                                               ),
@@ -214,13 +213,13 @@ class LineChartWidget extends StatelessWidget {
                                               lineBarsData: [
                                                 LineChartBarData(
                                                     spots:
-                                                        validListmuskulaere_erschoepfung
+                                                        validlistmuskulaereErschoepfung
                                                             .map((point) =>
                                                                 FlSpot(point.x,
                                                                     point.y))
                                                             .toList(),
                                                     isCurved: false,
-                                                    dotData: FlDotData(
+                                                    dotData: const FlDotData(
                                                       show: false,
                                                     ),
                                                     color: Colors.red),
@@ -229,17 +228,17 @@ class LineChartWidget extends StatelessWidget {
                                                   border: const Border(
                                                       bottom: BorderSide(),
                                                       left: BorderSide())),
-                                              gridData: FlGridData(show: false),
+                                              gridData: const FlGridData(show: false),
                                               titlesData: FlTitlesData(
                                                 bottomTitles: AxisTitles(
                                                     sideTitles: _bottomTitles),
-                                                leftTitles: AxisTitles(
+                                                leftTitles: const AxisTitles(
                                                     sideTitles: SideTitles(
                                                         showTitles: false)),
-                                                topTitles: AxisTitles(
+                                                topTitles: const AxisTitles(
                                                     sideTitles: SideTitles(
                                                         showTitles: false)),
-                                                rightTitles: AxisTitles(
+                                                rightTitles: const AxisTitles(
                                                     sideTitles: SideTitles(
                                                         showTitles: false)),
                                               ),
@@ -272,13 +271,13 @@ class LineChartWidget extends StatelessWidget {
                                               lineBarsData: [
                                                 LineChartBarData(
                                                     spots:
-                                                        validListkoerperliche_einschraenkung
+                                                        validlistkoerperlicheEinschraenkung
                                                             .map((point) =>
                                                                 FlSpot(point.x,
                                                                     point.y))
                                                             .toList(),
                                                     isCurved: false,
-                                                    dotData: FlDotData(
+                                                    dotData: const FlDotData(
                                                       show: false,
                                                     ),
                                                     color: Colors.red),
@@ -287,17 +286,17 @@ class LineChartWidget extends StatelessWidget {
                                                   border: const Border(
                                                       bottom: BorderSide(),
                                                       left: BorderSide())),
-                                              gridData: FlGridData(show: false),
+                                              gridData: const FlGridData(show: false),
                                               titlesData: FlTitlesData(
                                                 bottomTitles: AxisTitles(
                                                     sideTitles: _bottomTitles),
-                                                leftTitles: AxisTitles(
+                                                leftTitles: const AxisTitles(
                                                     sideTitles: SideTitles(
                                                         showTitles: false)),
-                                                topTitles: AxisTitles(
+                                                topTitles: const AxisTitles(
                                                     sideTitles: SideTitles(
                                                         showTitles: false)),
-                                                rightTitles: AxisTitles(
+                                                rightTitles: const AxisTitles(
                                                     sideTitles: SideTitles(
                                                         showTitles: false)),
                                               ),
@@ -334,7 +333,7 @@ class LineChartWidget extends StatelessWidget {
                                                             point.x, point.y))
                                                         .toList(),
                                                     isCurved: false,
-                                                    dotData: FlDotData(
+                                                    dotData: const FlDotData(
                                                       show: false,
                                                     ),
                                                     color: Colors.red),
@@ -343,17 +342,17 @@ class LineChartWidget extends StatelessWidget {
                                                   border: const Border(
                                                       bottom: BorderSide(),
                                                       left: BorderSide())),
-                                              gridData: FlGridData(show: false),
+                                              gridData: const FlGridData(show: false),
                                               titlesData: FlTitlesData(
                                                 bottomTitles: AxisTitles(
                                                     sideTitles: _bottomTitles),
-                                                leftTitles: AxisTitles(
+                                                leftTitles: const AxisTitles(
                                                     sideTitles: SideTitles(
                                                         showTitles: false)),
-                                                topTitles: AxisTitles(
+                                                topTitles: const AxisTitles(
                                                     sideTitles: SideTitles(
                                                         showTitles: false)),
-                                                rightTitles: AxisTitles(
+                                                rightTitles: const AxisTitles(
                                                     sideTitles: SideTitles(
                                                         showTitles: false)),
                                               ),
@@ -390,7 +389,7 @@ class LineChartWidget extends StatelessWidget {
                                                             point.x, point.y))
                                                         .toList(),
                                                     isCurved: false,
-                                                    dotData: FlDotData(
+                                                    dotData: const FlDotData(
                                                       show: false,
                                                     ),
                                                     color: Colors.red),
@@ -399,17 +398,17 @@ class LineChartWidget extends StatelessWidget {
                                                   border: const Border(
                                                       bottom: BorderSide(),
                                                       left: BorderSide())),
-                                              gridData: FlGridData(show: false),
+                                              gridData: const FlGridData(show: false),
                                               titlesData: FlTitlesData(
                                                 bottomTitles: AxisTitles(
                                                     sideTitles: _bottomTitles),
-                                                leftTitles: AxisTitles(
+                                                leftTitles: const AxisTitles(
                                                     sideTitles: SideTitles(
                                                         showTitles: false)),
-                                                topTitles: AxisTitles(
+                                                topTitles: const AxisTitles(
                                                     sideTitles: SideTitles(
                                                         showTitles: false)),
-                                                rightTitles: AxisTitles(
+                                                rightTitles: const AxisTitles(
                                                     sideTitles: SideTitles(
                                                         showTitles: false)),
                                               ),
@@ -427,7 +426,7 @@ class LineChartWidget extends StatelessWidget {
                                     TextButton(
                                       onPressed: () {
                                         HomeScreen passedHomeScreen =
-                                            HomeScreen(2, 2, 2, 2, 2);
+                                            const HomeScreen(2, 2, 2, 2, 2);
                                         if (data["todaysFeedback"].isNotEmpty) {
                                           passedHomeScreen = HomeScreen(
                                             data["todaysFeedback"][0]
@@ -455,7 +454,7 @@ class LineChartWidget extends StatelessWidget {
                                       },
                                       style: TextButton.styleFrom(
                                           minimumSize:
-                                              Size(double.infinity, 50),
+                                              const Size(double.infinity, 50),
                                           backgroundColor:
                                               Colors.greenAccent.shade700,
                                           shape: RoundedRectangleBorder(
@@ -474,7 +473,7 @@ class LineChartWidget extends StatelessWidget {
                                         onPressed: openTeamScreen,
                                         style: TextButton.styleFrom(
                                             minimumSize:
-                                                Size(double.infinity, 50),
+                                                const Size(double.infinity, 50),
                                             backgroundColor:
                                                 Colors.blueAccent.shade700,
                                             shape: RoundedRectangleBorder(
@@ -492,7 +491,7 @@ class LineChartWidget extends StatelessWidget {
                                       onPressed: logout,
                                       style: TextButton.styleFrom(
                                           minimumSize:
-                                              Size(double.infinity, 50),
+                                              const Size(double.infinity, 50),
                                           backgroundColor:
                                               Colors.redAccent.shade700,
                                           shape: RoundedRectangleBorder(
@@ -554,7 +553,7 @@ class LineChartWidget extends StatelessWidget {
                                   TextButton(
                                     onPressed: () {
                                       HomeScreen passedHomeScreen =
-                                          HomeScreen(2, 2, 2, 2, 2);
+                                          const HomeScreen(2, 2, 2, 2, 2);
                                       if (data["todaysFeedback"].isNotEmpty) {
                                         passedHomeScreen = HomeScreen(
                                           data["todaysFeedback"][0]
@@ -581,7 +580,7 @@ class LineChartWidget extends StatelessWidget {
                                                   passedHomeScreen));
                                     },
                                     style: TextButton.styleFrom(
-                                        minimumSize: Size(double.infinity, 50),
+                                        minimumSize: const Size(double.infinity, 50),
                                         backgroundColor:
                                             Colors.greenAccent.shade700,
                                         shape: RoundedRectangleBorder(
@@ -598,7 +597,7 @@ class LineChartWidget extends StatelessWidget {
                                   TextButton(
                                     onPressed: openTeamScreen,
                                     style: TextButton.styleFrom(
-                                        minimumSize: Size(double.infinity, 50),
+                                        minimumSize: const Size(double.infinity, 50),
                                         backgroundColor:
                                             Colors.blueAccent.shade700,
                                         shape: RoundedRectangleBorder(
@@ -615,7 +614,7 @@ class LineChartWidget extends StatelessWidget {
                                   TextButton(
                                     onPressed: logout,
                                     style: TextButton.styleFrom(
-                                        minimumSize: Size(double.infinity, 50),
+                                        minimumSize: const Size(double.infinity, 50),
                                         backgroundColor:
                                             Colors.redAccent.shade700,
                                         shape: RoundedRectangleBorder(
@@ -655,37 +654,36 @@ class LineChartWidget extends StatelessWidget {
           switch (value.toInt()) {
             case 0:
               text = DateFormat('EEEE')
-                  .format(date.subtract(Duration(days: 6)))
+                  .format(date.subtract(const Duration(days: 6)))
                   .substring(0, 2);
               break;
             case 1:
               text = DateFormat('EEEE')
-                  .format(date.subtract(Duration(days: 5)))
+                  .format(date.subtract(const Duration(days: 5)))
                   .substring(0, 2);
               break;
             case 2:
               text = DateFormat('EEEE')
-                  .format(date.subtract(Duration(days: 4)))
+                  .format(date.subtract(const Duration(days: 4)))
                   .substring(0, 2);
               break;
             case 3:
               text = DateFormat('EEEE')
-                  .format(date.subtract(Duration(days: 3)))
+                  .format(date.subtract(const Duration(days: 3)))
                   .substring(0, 2);
               break;
             case 4:
               text = DateFormat('EEEE')
-                  .format(date.subtract(Duration(days: 2)))
+                  .format(date.subtract(const Duration(days: 2)))
                   .substring(0, 2);
               break;
             case 5:
               text = DateFormat('EEEE')
-                  .format(date.subtract(Duration(days: 1)))
+                  .format(date.subtract(const Duration(days: 1)))
                   .substring(0, 2);
               break;
             case 6:
-              text = DateFormat('EEEE').format(date).substring(0, 2);
-              ;
+              text = DateFormat('EEEE').format(date).substring(0, 2); {}
               break;
           }
           return Text(text);
