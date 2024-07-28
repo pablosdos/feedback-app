@@ -1,36 +1,192 @@
 import 'package:flutter/material.dart';
-import 'package:coopmetrics/screens/login.dart';
-import 'package:coopmetrics/screens/home.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
 
-// void main() {
-//   runApp(const MyApp());
-// }
+import '../enums.dart';
+import 'providers/page_notifier.dart';
+import '../pages/home.dart';
+import 'pages/info.dart';
+import 'pages/physio.dart';
+import 'pages/physio_pages/silhouette.dart';
+import 'pages/info_pages/about.dart';
+import 'pages/info_pages/agb.dart';
+import 'pages/info_pages/app.dart';
+import 'pages/info_pages/disclaimer.dart';
+import 'pages/info_pages/impress.dart';
+import 'pages/onboarding_pages/login.dart';
+import 'pages/onboarding_pages/start.dart';
+import 'pages/physio_pages/feedback.dart';
+import 'pages/physio_pages/statistics.dart';
+import 'pages/physio_pages/groupStatistics.dart';
 
-Future<void> main() async {
+/// Flutter code sample for [NavigationBar].
 
-  WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  var email = prefs.getString('email');
-  // debugPrint('email exists if visible: $email');
-  await dotenv.load();
-  runApp(MaterialApp(home: email == null ? LoginScreen() : HomeScreen(2, 2, 2, 2, 2)));
+void main() => runApp(const NavigationBarApp());
+
+class NavigationBarApp extends StatelessWidget {
+  const NavigationBarApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+        create: (context) => PageNotifier(),
+        child: MaterialApp(
+          theme: ThemeData(useMaterial3: true),
+          home: const NavigationExample(),
+        ));
+  }
 }
 
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
+class NavigationExample extends StatefulWidget {
+  const NavigationExample({super.key});
 
-  // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'LoginRadius Example',
-//       debugShowCheckedModeBanner: false,
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: const LoginScreen(),
-//     );
-//   }
-// }
+  @override
+  State<NavigationExample> createState() => _NavigationExampleState();
+}
+
+class _NavigationExampleState extends State<NavigationExample> {
+  @override
+  Widget build(BuildContext context) {
+    final notifier = Provider.of<PageNotifier>(context);
+    final ThemeData theme = Theme.of(context);
+    if (notifier.pageName == PageName.silhouette) //
+    {
+      return const SilhouettePage(title: 'Schmerz-Silhouette');
+    } else if (notifier.pageName == PageName.feedback) {
+      return const FeedbackPage(title: 'Schmerz-Silhouette');
+    } else if (notifier.pageName == PageName.statistcs) {
+      return const StatisticsPage(title: 'Schmerz-Silhouette');
+    } else if (notifier.pageName == PageName.groupStatistics) {
+      return const GroupStatisticsPage(title: 'Schmerz-Silhouette');
+    } else if (notifier.pageName == PageName.login) {
+      return const LoginPage(title: 'Schmerz-Silhouette');
+    } else if (notifier.pageName == PageName.onboarding) {
+      return const StartPage(title: 'Schmerz-Silhouette');
+    } else if (notifier.pageName == PageName.about) {
+      return const AboutPage(title: 'Schmerz-Silhouette');
+    } else if (notifier.pageName == PageName.agb) {
+      return const AgbPage(title: 'Schmerz-Silhouette');
+    } else if (notifier.pageName == PageName.app) {
+      return const AppPage(title: 'Schmerz-Silhouette');
+    } else if (notifier.pageName == PageName.disclaimer) {
+      return const DisclaimerPage(title: 'Schmerz-Silhouette');
+    } else if (notifier.pageName == PageName.impress) {
+      return const ImpressPage(title: 'Schmerz-Silhouette');
+    } else {
+      return Scaffold(
+          bottomNavigationBar: NavigationBar(
+            onDestinationSelected: (int index) {
+              notifier.changePage(
+                  page: PageName.home, unknown: false, pageIndex: index);
+            },
+            indicatorColor: Colors.amber,
+            selectedIndex: notifier.currentPageIndex,
+            destinations: const <Widget>[
+              NavigationDestination(
+                selectedIcon: Icon(Icons.home),
+                icon: Icon(Icons.home_outlined),
+                label: 'Start',
+              ),
+              NavigationDestination(
+                selectedIcon: Icon(Icons.health_and_safety),
+                icon: Icon(Icons.health_and_safety_outlined),
+                label: 'Physio',
+              ),
+              NavigationDestination(
+                selectedIcon: Badge(
+                  label: Text('2'),
+                  child: Icon(Icons.calendar_month),
+                ),
+                icon: Badge(
+                  label: Text('2'),
+                  child: Icon(Icons.calendar_month_outlined),
+                ),
+                label: 'Kalender',
+              ),
+              NavigationDestination(
+                selectedIcon: Icon(Icons.info),
+                icon: Icon(Icons.info_outlined),
+                label: 'Info',
+              ),
+            ],
+          ),
+          body: Scaffold(
+            body: NestedScrollView(
+              headerSliverBuilder:
+                  (BuildContext context, bool innerBoxIsScrolled) {
+                return <Widget>[
+                  notifier.currentPageIndex == 0
+                      ? SliverAppBar(
+                          expandedHeight: 200.0,
+                          floating: false,
+                          pinned: true,
+                          flexibleSpace: FlexibleSpaceBar(
+                              centerTitle: true,
+                              title: SafeArea(
+                                child: Container(
+                                  alignment: Alignment.center,
+
+                                  // we can set width here with conditions
+                                  width: 200,
+                                  child: const Text(
+                                    """Hallo Max, \nkooperiere mit deinem Staff! Hilf Ihnen sich ein 
+umfassendes Bild über deine Wahrnehmung
+zu schaffen, indem du dein Feedback über 
+deine Wahrnehmung teilst.""",
+                                    style: TextStyle(fontSize: 10.0),
+                                  ),
+                                ),
+                              ),
+                              background: Image.network(
+                                "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
+                                fit: BoxFit.cover,
+                              )),
+                        )
+                      : SliverAppBar(
+                          floating: false,
+                          pinned: true,
+                          flexibleSpace: SafeArea(
+                            child: Container(
+                              alignment: Alignment.center,
+
+                              // we can set width here with conditions
+                              width: 200,
+                              child: const Text(
+                                """Info""",
+                                style: TextStyle(fontSize: 12.0),
+                              ),
+                            ),
+                          ),
+                        )
+                ];
+              },
+              body: Center(
+                child: SingleChildScrollView(
+                  child: Center(
+                      child: Stack(
+                    children: [
+                      <Widget>[
+                        const HomePage(),
+                        PhysioPage(),
+                        const Card(
+                          shadowColor: Colors.transparent,
+                          margin: EdgeInsets.all(8.0),
+                          child: SizedBox(
+                            width: 300,
+                            height: 50,
+                            child: Text(
+                              "Feedback Kalender",
+                              style: TextStyle(fontSize: 24.0),
+                            ),
+                          ),
+                        ),
+                        const InfoPage(),
+                      ][notifier.currentPageIndex],
+                    ],
+                  )),
+                ),
+              ),
+            ),
+          ));
+    }
+  }
+}
