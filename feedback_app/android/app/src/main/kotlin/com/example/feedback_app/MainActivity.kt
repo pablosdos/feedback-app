@@ -1,4 +1,4 @@
-package com.example.feedback_app
+package com.coopmetrics.coopmetrics
 
 import io.flutter.embedding.android.FlutterActivity
 
