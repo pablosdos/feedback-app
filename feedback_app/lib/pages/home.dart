@@ -22,76 +22,82 @@ class HomePage extends StatelessWidget {
             style: TextStyle(fontSize: 24.0),
           ),
         ),
-        Card(
-          // Define the shape of the card
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(4),
-          ),
-          // Define how the card's content should be clipped
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          // Define the child widget of the card
-          child: SizedBox(
-            width: 350,
-            height: 300,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                // Add padding around the row widget
-                Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Center(
-                              child: Image.asset(
-                                'assets/images/feedback-smileys.png',
-                                height: 100,
-                                width: 200,
-                                fit: BoxFit.cover,
+        InkWell(
+          onTap: () {
+            notifier.changePage(
+                page: PageName.feedback, unknown: false, pageIndex: 3);
+          },
+          child: Card(
+            // Define the shape of the card
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4),
+            ),
+            // Define how the card's content should be clipped
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            // Define the child widget of the card
+            child: SizedBox(
+              width: 350,
+              height: 300,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  // Add padding around the row widget
+                  Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Center(
+                                child: Image.asset(
+                                  'assets/images/feedback-smileys.png',
+                                  height: 100,
+                                  width: 200,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
 
-                            Container(width: 20),
-                            Center(
-                                child: Text(
-                              'zum Feedback',
-                              style: MyTextSample.title(context)!.copyWith(
-                                color: MyColorsSample.grey_80,
-                              ),
-                            )),
-                            // Add some spacing between the title and the subtitle
-                            Container(height: 5),
-                            // Add a subtitle widget
-                            Center(
-                                child: Text(
-                              "Tages-Feedback",
-                              style: MyTextSample.body1(context)!.copyWith(
-                                color: Colors.grey[500],
-                              ),
-                            )),
-                            // Add some spacing between the subtitle and the text
-                            Container(height: 10),
-                            // Add a text widget to display some text
-                            Center(
-                                child: Text(
-                              textAlign: TextAlign.center,
-                              MyStringsSample.card_text,
-                              maxLines: 4,
-                              style: MyTextSample.subhead(context)!.copyWith(
-                                color: Colors.grey[700],
-                              ),
-                            )),
-                          ],
+                              Container(width: 20),
+                              Center(
+                                  child: Text(
+                                'zum Feedback',
+                                style: MyTextSample.title(context)!.copyWith(
+                                  color: MyColorsSample.grey_80,
+                                ),
+                              )),
+                              // Add some spacing between the title and the subtitle
+                              Container(height: 5),
+                              // Add a subtitle widget
+                              Center(
+                                  child: Text(
+                                "Tages-Feedback",
+                                style: MyTextSample.body1(context)!.copyWith(
+                                  color: Colors.grey[500],
+                                ),
+                              )),
+                              // Add some spacing between the subtitle and the text
+                              Container(height: 10),
+                              // Add a text widget to display some text
+                              Center(
+                                  child: Text(
+                                textAlign: TextAlign.center,
+                                MyStringsSample.card_text,
+                                maxLines: 4,
+                                style: MyTextSample.subhead(context)!.copyWith(
+                                  color: Colors.grey[700],
+                                ),
+                              )),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -165,69 +171,75 @@ class HomePage extends StatelessWidget {
             style: TextStyle(fontSize: 24.0),
           ),
         ),
-        Card(
-          // Define the shape of the card
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(4),
-          ),
-          // Define how the card's content should be clipped
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          // Define the child widget of the card
-          child: SizedBox(
-            width: 350,
-            height: 350,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                // Add padding around the row widget
-                Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Center(
-                              child: Image.asset(
-                                'assets/images/kalender.png',
-                                height: 150,
-                                width: 200,
-                                fit: BoxFit.cover,
+        InkWell(
+          onTap: () {
+            notifier.changePage(
+                page: PageName.home, unknown: false, pageIndex: 2);
+          },
+          child: Card(
+            // Define the shape of the card
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4),
+            ),
+            // Define how the card's content should be clipped
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            // Define the child widget of the card
+            child: SizedBox(
+              width: 350,
+              height: 350,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  // Add padding around the row widget
+                  Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Center(
+                                child: Image.asset(
+                                  'assets/images/kalender.png',
+                                  height: 150,
+                                  width: 200,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
 
-                            Container(width: 20),
-                            Center(
-                                child: Text(
-                              "Feedback-Übersicht",
-                              style: MyTextSample.title(context)!.copyWith(
-                                color: MyColorsSample.grey_80,
-                              ),
-                            )),
-                            // Add some spacing between the title and the subtitle
-                            Container(height: 5),
+                              Container(width: 20),
+                              Center(
+                                  child: Text(
+                                "Feedback-Übersicht",
+                                style: MyTextSample.title(context)!.copyWith(
+                                  color: MyColorsSample.grey_80,
+                                ),
+                              )),
+                              // Add some spacing between the title and the subtitle
+                              Container(height: 5),
 
-                            // Add some spacing between the subtitle and the text
-                            Container(height: 10),
-                            // Add a text widget to display some text
-                            Center(
-                                child: Text(
-                              textAlign: TextAlign.center,
-                              "Entdecke, an welchen Tagen du bereits dein Feedback abgegeben hast. Du hast an den letzten ${notifier.currentPageIndex} Tagen erfolgreich mit deinem Staff kooperiert.",
-                              maxLines: 4,
-                              style: MyTextSample.subhead(context)!.copyWith(
-                                color: Colors.grey[700],
-                              ),
-                            )),
-                          ],
+                              // Add some spacing between the subtitle and the text
+                              Container(height: 10),
+                              // Add a text widget to display some text
+                              Center(
+                                  child: Text(
+                                textAlign: TextAlign.center,
+                                "Entdecke, an welchen Tagen du bereits dein Feedback abgegeben hast. Du hast an den letzten ${notifier.currentPageIndex} Tagen erfolgreich mit deinem Staff kooperiert.",
+                                maxLines: 4,
+                                style: MyTextSample.subhead(context)!.copyWith(
+                                  color: Colors.grey[700],
+                                ),
+                              )),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

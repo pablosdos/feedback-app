@@ -1,10 +1,22 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'package:shared_preferences/shared_preferences.dart';
 import '../enums.dart';
 import '../providers/page_notifier.dart';
 
 class InfoPage extends StatelessWidget {
   const InfoPage({super.key});
+
+  Future<void> logout(notifier) async {
+    // final notifier = Provider.of<PageNotifier>(context, listen: false);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('email');
+    notifier.changePage(
+        page: PageName.onboarding, unknown: false, pageIndex: 3);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,8 +107,7 @@ class InfoPage extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              notifier.changePage(
-                  page: PageName.onboarding, unknown: false, pageIndex: 3);
+              logout(notifier);
             },
             child: const Text("Logout"),
           )

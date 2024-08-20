@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
 import '../enums.dart';
 import 'providers/page_notifier.dart';
 import '../pages/home.dart';
@@ -15,15 +17,25 @@ import 'pages/info_pages/impress.dart';
 import 'pages/onboarding_pages/login.dart';
 import 'pages/onboarding_pages/start.dart';
 import 'pages/physio_pages/feedback.dart';
+import 'pages/physio_pages/feedback_received.dart';
 import 'pages/physio_pages/statistics.dart';
 import 'pages/physio_pages/groupStatistics.dart';
 
 /// Flutter code sample for [NavigationBar].
 
-void main() => runApp(const NavigationBarApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await dotenv.load(fileName: ".env");
+  runApp(NavigationBarApp(
+    emailInApp: prefs.getString('email'),
+  ));
+}
 
 class NavigationBarApp extends StatelessWidget {
-  const NavigationBarApp({super.key});
+  const NavigationBarApp({required this.emailInApp, super.key});
+
+  final String? emailInApp;
 
   @override
   Widget build(BuildContext context) {
@@ -31,28 +43,48 @@ class NavigationBarApp extends StatelessWidget {
         create: (context) => PageNotifier(),
         child: MaterialApp(
           theme: ThemeData(useMaterial3: true),
-          home: const NavigationExample(),
+          home: NavigationExample(emailInNavigationExample: emailInApp),
         ));
   }
 }
 
 class NavigationExample extends StatefulWidget {
-  const NavigationExample({super.key});
+  const NavigationExample({required this.emailInNavigationExample, super.key});
+
+  final String? emailInNavigationExample;
 
   @override
-  State<NavigationExample> createState() => _NavigationExampleState();
+  State<NavigationExample> createState() =>
+      _NavigationExampleState(emailInNavigationExample);
 }
 
 class _NavigationExampleState extends State<NavigationExample> {
+  String? emailInNavigationExampleState;
+
+  _NavigationExampleState(this.emailInNavigationExampleState);
+
+  @override
+  void initState() {
+    emailInNavigationExampleState = emailInNavigationExampleState;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final notifier = Provider.of<PageNotifier>(context);
     final ThemeData theme = Theme.of(context);
-    if (notifier.pageName == PageName.silhouette) //
-    {
+    // route to the page; Sub Pages
+    // debugPrint(emailInNavigationExampleState);
+    // debugPrint(notifier.pageName.toString());
+    if (emailInNavigationExampleState == null &&
+        notifier.pageName != PageName.login) {
+      return const StartPage(title: 'Schmerz-Silhouette');
+    } else if (notifier.pageName == PageName.silhouette) {
       return const SilhouettePage(title: 'Schmerz-Silhouette');
     } else if (notifier.pageName == PageName.feedback) {
-      return const FeedbackPage(title: 'Schmerz-Silhouette');
+      return const HomeScreen(2, 2, 2, 2, 2);
+    } else if (notifier.pageName == PageName.feedbackReceived) {
+      return const FeedbackReceivedPage(title: 'xyz');
     } else if (notifier.pageName == PageName.statistcs) {
       return const StatisticsPage(title: 'Schmerz-Silhouette');
     } else if (notifier.pageName == PageName.groupStatistics) {
@@ -72,6 +104,7 @@ class _NavigationExampleState extends State<NavigationExample> {
     } else if (notifier.pageName == PageName.impress) {
       return const ImpressPage(title: 'Schmerz-Silhouette');
     } else {
+      // route to the page; Home Page
       return Scaffold(
           bottomNavigationBar: NavigationBar(
             onDestinationSelected: (int index) {

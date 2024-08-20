@@ -1,4 +1,4 @@
-from .models import Feedback
+from .models import Feedback, Pain
 from rest_framework import serializers
 
 
@@ -22,4 +22,46 @@ class FeedbackSerializer(serializers.ModelSerializer):
         if obj.User.groups.all():
             return str(obj.User.groups.all()[0])
         else:
-            return ''
+            return ""
+
+
+class PainSerializer(serializers.ModelSerializer):
+    group_of_user = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Pain
+        fields = (
+            "User",
+            "group_of_user",
+            "head",
+            "neck",
+            "leftShoulder",
+            "leftUpperArm",
+            "leftElbow",
+            "leftLowerArm",
+            "leftHand",
+            "rightShoulder",
+            "rightUpperArm",
+            "rightElbow",
+            "rightLowerArm",
+            "rightHand",
+            "upperBody",
+            "lowerBody",
+            "leftUpperLeg",
+            "leftKnee",
+            "leftLowerLeg",
+            "leftFoot",
+            "rightUpperLeg",
+            "rightKnee",
+            "rightLowerLeg",
+            "rightFoot",
+            "abdomen",
+            "vestibular",
+            "created_at",
+        )
+
+    def get_group_of_user(self, obj):
+        if obj.User.groups.all():
+            return str(obj.User.groups.all()[0])
+        else:
+            return ""

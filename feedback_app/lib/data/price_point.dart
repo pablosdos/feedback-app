@@ -99,8 +99,10 @@ Map<String, List<PricePoint>> getMapOfPricePointLists(result) {
       if (result[i].created_at.toString().substring(0, 10) ==
           lastSevenDays[j].toString().substring(0, 10)) {
         motivationNumbers.add(result[i].motivation.toDouble());
-        muskulaereErschoepfungnumbers.add(result[i].muskulaere_erschoepfung.toDouble());
-        koerperlicheEinschraenkungnumbers.add(result[i].koerperliche_einschraenkung.toDouble());
+        muskulaereErschoepfungnumbers
+            .add(result[i].muskulaere_erschoepfung.toDouble());
+        koerperlicheEinschraenkungnumbers
+            .add(result[i].koerperliche_einschraenkung.toDouble());
         schlafNumbers.add(result[i].schlaf.toDouble());
         stressNumbers.add(result[i].stress.toDouble());
         counter++;
@@ -141,7 +143,11 @@ Future feedbacksAndCompleteHint() async {
   bundle['isComplete'] = getIsComplete(result);
   bundle['mapOfFeedbacks'] = getMapOfPricePointLists(result);
   bundle['todaysFeedback'] = resultTodaysFeedback;
-  bundle['group_name'] = result[0].group_of_user.toString();
+  try {
+    bundle['group_name'] = result[0].group_of_user.toString();
+  } catch (e) {
+    // code that handles the exception
+  }
   return bundle;
 }
 
@@ -152,7 +158,11 @@ Future feedbacksAndCompleteHintOfGroup() async {
   bundle['isComplete'] = getIsComplete(result);
   bundle['mapOfFeedbacks'] = getMapOfPricePointLists(result);
   bundle['todaysFeedback'] = resultTodaysFeedback;
-  bundle['group_name'] = result[0].group_name.toString();
+  try {
+    bundle['group_name'] = result[0].group_of_user.toString();
+  } catch (e) {
+    // code that handles the exception
+  }
   return bundle;
 }
 

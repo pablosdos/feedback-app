@@ -3,9 +3,9 @@ from django.db.models.query import QuerySet
 from django.core import serializers
 from rest_framework.views import APIView
 import datetime
-from .models import Feedback
-from auth_api.models import CustomUser, Roles
-from .serializers import FeedbackSerializer
+from ..models import Feedback
+from auth_api.models import CustomUser, Team, Company
+from ..serializers import FeedbackSerializer
 from auth_api.serializers import UserSerializer
 from django.http import HttpResponse, JsonResponse
 
@@ -62,6 +62,7 @@ def daterange(start_date, end_date):
         yield start_date + datetime.timedelta(n + 1)
 
 
+# API endpoint for feedbacks listing
 class FeedbackListView(generics.ListAPIView):
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
@@ -70,7 +71,7 @@ class FeedbackListView(generics.ListAPIView):
         email_or_group_id: str = self.kwargs["email_or_group"]
         today: datetime.date = datetime.date.today()
         if self.request.GET.get("arithmetic_mean") == "True":
-            group_name: str = str(Roles.objects.filter(id=email_or_group_id)[0])
+            group_name: str = str(Team.objects.filter(id=email_or_group_id)[0])
             list_of_this_weeks_group_feedbacks: list = []
             start_date = today - datetime.timedelta(days=7)
             end_date = today

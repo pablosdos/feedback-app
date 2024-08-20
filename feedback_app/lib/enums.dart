@@ -3,6 +3,7 @@ enum PageName {
   login,
   home,
   feedback,
+  feedbackReceived,
   silhouette,
   statistcs,
   groupStatistics,

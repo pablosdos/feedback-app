@@ -27,7 +27,7 @@ class PhysioPage extends StatelessWidget {
                 notifier.changePage(
                     page: PageName.feedback, unknown: false, pageIndex: 3);
               },
-              child: Card(
+              child: const Card(
                 child: ListTile(
                   leading: Icon(Icons.arrow_forward),
                   title: Text('Feedback'),

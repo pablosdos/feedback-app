@@ -1,21 +1,17 @@
 from django.contrib import admin
-from .models import Feedback
-from auth_api.models import Roles
-from django.contrib.auth.models import Group
-
-try:
-    from rest_framework.authtoken.models import TokenProxy as DRFToken
-except ImportError:
-    from rest_framework.authtoken.models import Token as DRFToken
+from django.db.models import QuerySet
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
+from .models import Feedback, Pain
+
 User = get_user_model()
+
 
 # CUSTOM USER FILTER (ONLY USERS FROM GROUP OF TEAMLEAD)
 class TeamUserFilter(admin.SimpleListFilter):
-    title = 'User' # or use _('country') for translated title
-    parameter_name = 'User'
+    title = "User"  # or use _('country') for translated title
+    parameter_name = "User"
 
     def lookups(self, request, model_admin):
         groups_of_user = request.user.groups.all()
@@ -36,6 +32,7 @@ class TeamUserFilter(admin.SimpleListFilter):
         if self.value():
             return queryset.filter(User__email=self.value())
 
+
 class FeedbackAdmin(admin.ModelAdmin):
     readonly_fields = ["created_at"]
     # list_display = [field.name for field in Feedback._meta.get_fields()]
@@ -43,72 +40,62 @@ class FeedbackAdmin(admin.ModelAdmin):
         "get_fullname",
         "created_at_renamed",
         "groups_of_user_with_ordering",
+        "company",
+        "team",
     ]
-    list_filter = [TeamUserFilter]
+    # list_filter = [TeamUserFilter]
 
     def get_queryset(self, request):
-        groups_of_user = request.user.groups.all()
-        if not groups_of_user:
+        # init empty queryset
+        summary_queryset: QuerySet = Feedback.objects.none()
+        team: str = request.user.team
+        company: str = request.user.company
+        # if not has team or company, then superuser and return all users
+        if not team and not company:
             return super().get_queryset(request)
-        all_users_queryset = Feedback.objects.all()
-        summary_queryset = Feedback.objects.none()
-        for group in groups_of_user:
-            summary_queryset = summary_queryset | all_users_queryset.filter(User__groups=group)
-        return summary_queryset
+        # then company admin and return all company coaches
+        if not team and company:
+            all_users_queryset = Feedback.objects.all()
+            summary_queryset = summary_queryset | all_users_queryset.filter(
+                company=company
+            )
+            return summary_queryset
+        # for coaches himself and all users of team
+        if team:
+            all_users_queryset = Feedback.objects.all()
+            summary_queryset = summary_queryset | all_users_queryset.filter(
+                company=company,
+                team=team
+            )
+            return summary_queryset
+        # groups_of_user = request.user.groups.all()
+        # if not groups_of_user:
+        #     return super().get_queryset(request)
+        # all_users_queryset = Feedback.objects.all()
+        # summary_queryset = Feedback.objects.none()
+        # for group in groups_of_user:
+        #     summary_queryset = summary_queryset | all_users_queryset.filter(
+        #         User__groups=group
+        #     )
+        # return summary_queryset
 
-    @admin.display(ordering='User__fullname', description='User')
+    @admin.display(ordering="User__fullname", description="User")
     def get_fullname(self, obj):
         return obj.User.fullname
-    
+
     def groups_of_user_with_ordering(self, obj):
         groups_list: list = []
         for group in obj.User.groups.all():
             groups_list.append(group)
         return groups_list
-    
+
     def created_at_renamed(self, obj):
         return obj.created_at
 
-    groups_of_user_with_ordering.admin_order_field = 'User__groups'
-    created_at_renamed.admin_order_field = 'created_at'
-    created_at_renamed.short_description = 'Feedback abgegeben am'
+    groups_of_user_with_ordering.admin_order_field = "User__groups"
+    created_at_renamed.admin_order_field = "created_at"
+    created_at_renamed.short_description = "Feedback abgegeben am"
 
-class UserAdmin(admin.ModelAdmin):
 
-    list_display = ("fullname", "email", "role_of_user", "groups_of_user_with_ordering")
-    # list_filter = [DecadeBornListFilter, "is_staff" "is_superuser"]
-    # ordering = ('role_of_user', 'groups_of_user')
-    def get_queryset(self, request):
-        groups_of_user = request.user.groups.all()
-        if not groups_of_user:
-            return super().get_queryset(request)
-        all_users_queryset = User.objects.all()
-        summary_queryset = User.objects.none()
-        for group in groups_of_user:
-            summary_queryset = summary_queryset | all_users_queryset.filter(groups=group)
-        return summary_queryset
-
-    def groups_of_user_with_ordering(self, obj):
-        groups_list: list = []
-        for group in obj.groups.all():
-            groups_list.append(group)
-        return groups_list
-    
-    def role_of_user(self, obj):
-        if obj.is_superuser:
-            return 'Superadmin'
-        if obj.is_staff:
-            return 'Teamleiter'
-        if obj.groups.all():
-            return 'Gruppen-Klient'
-        return 'Allgemeiner Klient'
-
-    groups_of_user_with_ordering.admin_order_field = 'groups'
-    groups_of_user_with_ordering.short_description = 'Team des Users'
-
-admin.site.unregister(User)
-admin.site.register(User, UserAdmin)
-admin.site.unregister(DRFToken)
 admin.site.register(Feedback, FeedbackAdmin)
-admin.site.unregister(Group)
-admin.site.register(Roles)
+admin.site.register(Pain)
