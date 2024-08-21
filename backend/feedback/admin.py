@@ -64,8 +64,7 @@ class FeedbackAdmin(admin.ModelAdmin):
         if team:
             all_users_queryset = Feedback.objects.all()
             summary_queryset = summary_queryset | all_users_queryset.filter(
-                company=company,
-                team=team
+                company=company, team=team
             )
             return summary_queryset
         # groups_of_user = request.user.groups.all()
@@ -97,5 +96,13 @@ class FeedbackAdmin(admin.ModelAdmin):
     created_at_renamed.short_description = "Feedback abgegeben am"
 
 
+class PainAdmin(admin.ModelAdmin):
+    readonly_fields = ["created_at"]
+    list_display = [
+        "User",
+        "created_at",
+    ]
+
+
 admin.site.register(Feedback, FeedbackAdmin)
-admin.site.register(Pain)
+admin.site.register(Pain, PainAdmin)

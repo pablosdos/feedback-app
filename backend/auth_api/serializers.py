@@ -24,6 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
             "password",
             "feedbacks",
             "groups",
+            "team",
         )
         validators = [
             UniqueTogetherValidator(

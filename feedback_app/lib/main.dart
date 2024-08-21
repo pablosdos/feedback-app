@@ -76,19 +76,21 @@ class _NavigationExampleState extends State<NavigationExample> {
     // route to the page; Sub Pages
     // debugPrint(emailInNavigationExampleState);
     // debugPrint(notifier.pageName.toString());
+    // navigate to onboarding page, if no user is logged in and it´s not the login page
     if (emailInNavigationExampleState == null &&
         notifier.pageName != PageName.login) {
       return const StartPage(title: 'Schmerz-Silhouette');
     } else if (notifier.pageName == PageName.silhouette) {
       return const SilhouettePage(title: 'Schmerz-Silhouette');
     } else if (notifier.pageName == PageName.feedback) {
+      // HomeScreen is feedback page at the moment
       return const HomeScreen(2, 2, 2, 2, 2);
     } else if (notifier.pageName == PageName.feedbackReceived) {
       return const FeedbackReceivedPage(title: 'xyz');
     } else if (notifier.pageName == PageName.statistcs) {
-      return const StatisticsPage(title: 'Schmerz-Silhouette');
+      return StatisticsPage();
     } else if (notifier.pageName == PageName.groupStatistics) {
-      return const GroupStatisticsPage(title: 'Schmerz-Silhouette');
+      return GroupStatisticsPage();
     } else if (notifier.pageName == PageName.login) {
       return const LoginPage(title: 'Schmerz-Silhouette');
     } else if (notifier.pageName == PageName.onboarding) {

@@ -71,6 +71,9 @@ class FeedbackListView(generics.ListAPIView):
         email_or_group_id: str = self.kwargs["email_or_group"]
         today: datetime.date = datetime.date.today()
         if self.request.GET.get("arithmetic_mean") == "True":
+            print(email_or_group_id)
+            print(email_or_group_id)
+            print(email_or_group_id)
             group_name: str = str(Team.objects.filter(id=email_or_group_id)[0])
             list_of_this_weeks_group_feedbacks: list = []
             start_date = today - datetime.timedelta(days=7)
@@ -78,7 +81,7 @@ class FeedbackListView(generics.ListAPIView):
             for single_date in daterange(start_date, end_date):
                 group_feedback_of_today: dict = {}
                 qs_of_selected_day: QuerySet[Feedback] = Feedback.objects.filter(
-                    User__groups=email_or_group_id
+                    User__team=email_or_group_id
                 ).filter(created_at__date=single_date)
                 motivation_value: int = 0
                 muskulaere_erschoepfung_value: int = 0

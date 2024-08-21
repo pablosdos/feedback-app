@@ -78,6 +78,7 @@ flutter:
     - .env
     - assets/images/logo-new.jpg
     - assets/images/logo9_clean.png
+    - assets/images/logo-new-transparent.jpg
     - assets/images/Feedback_Silhouette.jpg
     - assets/images/feedback-smileys.png
     - assets/images/kalender.png

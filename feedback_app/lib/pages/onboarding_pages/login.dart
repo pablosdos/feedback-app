@@ -97,10 +97,10 @@ class _LoginScreenState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           // SizedBox(height: size.height * 0.08),
-                          Image.asset('assets/images/logo9_clean.png'),
+                          Image.asset('assets/images/logo-new-transparent.jpg'),
                           const Center(
                             child: Text(
-                              "Graspmetrics",
+                              "CoopMetrics",
                               style: TextStyle(
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold,

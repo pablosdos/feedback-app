@@ -52,6 +52,7 @@ class ApiClient {
   final Dio _dio = Dio();
   String _email = '';
   int _group = 0;
+  int _team = 0;
   String apiUrl = dotenv.env['API_URL']!;
   Future<dynamic> login(String email, String password) async {
     try {
@@ -117,6 +118,7 @@ class ApiClient {
     _email = prefs.getString('email') ?? '';
     final user = await getUserWithFeedbacks(_email);
     _group = user["groups"][0] ?? 0;
+    _team = user["team"] ?? 0;
   }
 
   Future<List<Feedback>> getFeedbacks() async {
@@ -141,7 +143,7 @@ class ApiClient {
   Future<List<Feedback>> getFeedbacksOfGroup() async {
     await _getUserEmail();
     await _getUserGroup();
-    var url = Uri.parse('$apiUrl/feedback-app-api/feedbacks/$_group?arithmetic_mean=True');
+    var url = Uri.parse('$apiUrl/feedback-app-api/feedbacks/$_team?arithmetic_mean=True');
     final response =
         await http.get(url, headers: {"Content-Type": "application/json"});
     final List body = json.decode(response.body);

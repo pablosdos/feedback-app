@@ -44,15 +44,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    _currentSliderValueMotivation = widget._currentSliderValueMotivation;
-    _currentSliderValueMuskulaereErschoepfung =
-        widget._currentSliderValueMuskulaereErschoepfung;
-    _currentSliderValueKoerperlicheEinschraenkung =
-        widget._currentSliderValueKoerperlicheEinschraenkung;
-    _currentSliderValueSchlaf = widget._currentSliderValueSchlaf;
-    _currentSliderValueStress = widget._currentSliderValueStress;
-    super.initState();
     _loadPreferences();
+    // _currentSliderValueMotivation = widget._currentSliderValueMotivation;
+    // _currentSliderValueMuskulaereErschoepfung =
+    //     widget._currentSliderValueMuskulaereErschoepfung;
+    // _currentSliderValueKoerperlicheEinschraenkung =
+    //     widget._currentSliderValueKoerperlicheEinschraenkung;
+    // _currentSliderValueSchlaf = widget._currentSliderValueSchlaf;
+    // _currentSliderValueStress = widget._currentSliderValueStress;
+    super.initState();
+
     // _getInitialDataForFeedbackForm();
   }
 
@@ -61,6 +62,24 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _email = prefs.getString('email') ?? '';
     });
+    var data = await feedbacksAndCompleteHint();
+
+    // debugPrint(data['todaysFeedback'].toString());
+    if (data['todaysFeedback'].isNotEmpty) {
+      _currentSliderValueMotivation =
+          data['todaysFeedback'][0].motivation.toDouble();
+      _currentSliderValueMuskulaereErschoepfung =
+          data['todaysFeedback'][0].muskulaere_erschoepfung.toDouble();
+      _currentSliderValueKoerperlicheEinschraenkung =
+          data['todaysFeedback'][0].koerperliche_einschraenkung.toDouble();
+      _currentSliderValueSchlaf = data['todaysFeedback'][0].schlaf.toDouble();
+      _currentSliderValueStress = data['todaysFeedback'][0].stress.toDouble();
+      // trigger setState, so the new set values (above) are take place
+      setState(() {
+        _currentSliderValueMotivation = data['todaysFeedback'][0].motivation.toDouble();
+      });
+    }
+
     // not working – should be passed from the previous screen
     // final user_info = await _apiClient.getUserWithFeedbacks(_email);
     // userHasGroup = user_info["groups"].isNotEmpty;
@@ -136,190 +155,139 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         backgroundColor: Colors.blueGrey[200],
         body: Form(
-          key: _formKey,
-          child: FutureBuilder(
-            future: feedbacksAndCompleteHint(),
-            initialData: "Code sample",
-            builder: (BuildContext context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.deepPurpleAccent,
-                  ),
-                );
-              }
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text(
-                      'An ${snapshot.error} occurred',
-                      style: const TextStyle(fontSize: 18, color: Colors.red),
+            key: _formKey,
+            child: Stack(children: [
+              SizedBox(
+                width: size.width,
+                height: size.height,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    width: size.width * 0.85,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 30),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                  );
-                } else if (snapshot.hasData) {
-                  final data = snapshot.data;
-                  // debugPrint(data['todaysFeedback'].toString());
-
-                  _currentSliderValueMotivation =
-                      data['todaysFeedback'][0].motivation.toDouble();
-                  _currentSliderValueMuskulaereErschoepfung =
-                      data['todaysFeedback'][0]
-                          .muskulaere_erschoepfung
-                          .toDouble();
-                  _currentSliderValueKoerperlicheEinschraenkung =
-                      data['todaysFeedback'][0]
-                          .koerperliche_einschraenkung
-                          .toDouble();
-                  _currentSliderValueSchlaf =
-                      data['todaysFeedback'][0].schlaf.toDouble();
-                  _currentSliderValueStress =
-                      data['todaysFeedback'][0].stress.toDouble();
-
-                  return Stack(children: [
-                    SizedBox(
-                      width: size.width,
-                      height: size.height,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                          width: size.width * 0.85,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 30),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: SingleChildScrollView(
-                            child: Center(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  // SizedBox(height: size.height * 0.08),
-                                  const Center(
-                                    child: Text(
-                                      "Dein Feedback",
-                                      style: TextStyle(
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: size.height * 0.06),
-                                  Slider(
-                                      value: _currentSliderValueMotivation,
-                                      max: 5,
-                                      divisions: 5,
-                                      label:
-                                          "Motivation: ${(_currentSliderValueMotivation.round()).toString()}",
-                                      onChanged: (double value) {
-                                        setState(() {
-                                          _currentSliderValueMotivation = value;
-                                        });
-                                      }),
-                                  Slider(
-                                      value:
-                                          _currentSliderValueMuskulaereErschoepfung,
-                                      max: 5,
-                                      divisions: 5,
-                                      label:
-                                          "Muskuläre Erschöpfung: ${(_currentSliderValueMuskulaereErschoepfung.round()).toString()}",
-                                      onChanged: (double value) {
-                                        setState(() {
-                                          _currentSliderValueMuskulaereErschoepfung =
-                                              value;
-                                        });
-                                      }),
-                                  Slider(
-                                      value:
-                                          _currentSliderValueKoerperlicheEinschraenkung,
-                                      max: 5,
-                                      divisions: 5,
-                                      label:
-                                          "Koerperliche Einschränkung: ${(_currentSliderValueKoerperlicheEinschraenkung.round()).toString()}",
-                                      onChanged: (double value) {
-                                        setState(() {
-                                          _currentSliderValueKoerperlicheEinschraenkung =
-                                              value;
-                                        });
-                                      }),
-                                  Slider(
-                                      value: _currentSliderValueSchlaf,
-                                      max: 5,
-                                      divisions: 5,
-                                      label:
-                                          "Schlaf: ${(_currentSliderValueSchlaf.round()).toString()}",
-                                      onChanged: (double value) {
-                                        setState(() {
-                                          _currentSliderValueSchlaf = value;
-                                        });
-                                      }),
-                                  Slider(
-                                      value: _currentSliderValueStress,
-                                      max: 5,
-                                      divisions: 5,
-                                      label:
-                                          "Stress: ${(_currentSliderValueStress.round()).toString()}",
-                                      onChanged: (double value) {
-                                        setState(() {
-                                          _currentSliderValueStress = value;
-                                        });
-                                      }),
-                                  SizedBox(height: size.height * 0.04),
-                                  TextButton(
-                                    onPressed: () {
-                                      submitFeedback(notifier);
-                                    },
-                                    style: TextButton.styleFrom(
-                                        minimumSize:
-                                            const Size(double.infinity, 50),
-                                        backgroundColor:
-                                            Colors.greenAccent.shade700,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5)),
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 15, horizontal: 25)),
-                                    child: const Text(
-                                      'Absenden',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                  SizedBox(height: size.height * 0.01),
-                                  if (userHasGroup == true)
-                                    TextButton(
-                                      onPressed: openTeamScreen,
-                                      style: TextButton.styleFrom(
-                                          minimumSize:
-                                              const Size(double.infinity, 50),
-                                          backgroundColor:
-                                              Colors.blueAccent.shade700,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5)),
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 15, horizontal: 25)),
-                                      child: const Text(
-                                        'Team-Statistik',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ),
-                                  SizedBox(height: size.height * 0.04),
-                                ],
+                    child: SingleChildScrollView(
+                      child: Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            // SizedBox(height: size.height * 0.08),
+                            const Center(
+                              child: Text(
+                                "Dein Feedback",
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
-                          ),
+                            SizedBox(height: size.height * 0.06),
+                            Slider(
+                                value: _currentSliderValueMotivation,
+                                max: 5,
+                                divisions: 5,
+                                label:
+                                    "Motivation: ${(_currentSliderValueMotivation.round()).toString()}",
+                                onChanged: (double value) {
+                                  setState(() {
+                                    _currentSliderValueMotivation = value;
+                                  });
+                                }),
+                            Slider(
+                                value:
+                                    _currentSliderValueMuskulaereErschoepfung,
+                                max: 5,
+                                divisions: 5,
+                                label:
+                                    "Muskuläre Erschöpfung: ${(_currentSliderValueMuskulaereErschoepfung.round()).toString()}",
+                                onChanged: (double value) {
+                                  setState(() {
+                                    _currentSliderValueMuskulaereErschoepfung =
+                                        value;
+                                  });
+                                }),
+                            Slider(
+                                value:
+                                    _currentSliderValueKoerperlicheEinschraenkung,
+                                max: 5,
+                                divisions: 5,
+                                label:
+                                    "Koerperliche Einschränkung: ${(_currentSliderValueKoerperlicheEinschraenkung.round()).toString()}",
+                                onChanged: (double value) {
+                                  setState(() {
+                                    _currentSliderValueKoerperlicheEinschraenkung =
+                                        value;
+                                  });
+                                }),
+                            Slider(
+                                value: _currentSliderValueSchlaf,
+                                max: 5,
+                                divisions: 5,
+                                label:
+                                    "Schlaf: ${(_currentSliderValueSchlaf.round()).toString()}",
+                                onChanged: (double value) {
+                                  setState(() {
+                                    _currentSliderValueSchlaf = value;
+                                  });
+                                }),
+                            Slider(
+                                value: _currentSliderValueStress,
+                                max: 5,
+                                divisions: 5,
+                                label:
+                                    "Stress: ${(_currentSliderValueStress.round()).toString()}",
+                                onChanged: (double value) {
+                                  setState(() {
+                                    _currentSliderValueStress = value;
+                                  });
+                                }),
+                            SizedBox(height: size.height * 0.04),
+                            TextButton(
+                              onPressed: () {
+                                submitFeedback(notifier);
+                              },
+                              style: TextButton.styleFrom(
+                                  minimumSize: const Size(double.infinity, 50),
+                                  backgroundColor: Colors.greenAccent.shade700,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5)),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 15, horizontal: 25)),
+                              child: const Text(
+                                'Absenden',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                            SizedBox(height: size.height * 0.01),
+                            if (userHasGroup == true)
+                              TextButton(
+                                onPressed: openTeamScreen,
+                                style: TextButton.styleFrom(
+                                    minimumSize:
+                                        const Size(double.infinity, 50),
+                                    backgroundColor: Colors.blueAccent.shade700,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5)),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 15, horizontal: 25)),
+                                child: const Text(
+                                  'Team-Statistik',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            SizedBox(height: size.height * 0.04),
+                          ],
                         ),
                       ),
                     ),
-                  ]);
-                }
-              }
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-          ),
-        ));
+                  ),
+                ),
+              ),
+            ])));
   }
 }

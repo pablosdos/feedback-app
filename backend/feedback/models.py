@@ -18,7 +18,9 @@ class Feedback(models.Model):
     )
     company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True)
     team = models.ForeignKey(Team, on_delete=models.CASCADE, blank=True, null=True)
+    # default created_at field
     created_at = models.DateTimeField(auto_now_add=True)
+    # created_at field for adding mock data feedbacks to database
     # created_at = models.DateTimeField(auto_now=False, auto_now_add=False,blank=True, null=True)
     motivation = models.IntegerField(choices=ESTIMATION)
     muskulaere_erschoepfung = models.IntegerField(choices=ESTIMATION)
