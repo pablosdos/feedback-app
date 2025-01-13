@@ -8,6 +8,7 @@ import 'providers/page_notifier.dart';
 import '../pages/home.dart';
 import 'pages/info.dart';
 import 'pages/physio.dart';
+import 'pages/calendar.dart';
 import 'pages/physio_pages/silhouette.dart';
 import 'pages/info_pages/about.dart';
 import 'pages/info_pages/agb.dart';
@@ -20,6 +21,7 @@ import 'pages/physio_pages/feedback.dart';
 import 'pages/physio_pages/feedback_received.dart';
 import 'pages/physio_pages/statistics.dart';
 import 'pages/physio_pages/groupStatistics.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 /// Flutter code sample for [NavigationBar].
 
@@ -201,19 +203,8 @@ deine Wahrnehmung teilst.""",
                     children: [
                       <Widget>[
                         const HomePage(),
-                        PhysioPage(),
-                        const Card(
-                          shadowColor: Colors.transparent,
-                          margin: EdgeInsets.all(8.0),
-                          child: SizedBox(
-                            width: 300,
-                            height: 50,
-                            child: Text(
-                              "Feedback Kalender",
-                              style: TextStyle(fontSize: 24.0),
-                            ),
-                          ),
-                        ),
+                        const PhysioPage(),
+                        CalendarPage(),
                         const InfoPage(),
                       ][notifier.currentPageIndex],
                     ],
